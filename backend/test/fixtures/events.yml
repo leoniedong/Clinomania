@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  date: 2019-07-22 16:14:14
+  location: MyString
+  dress_code: MyString
+  student: one
+  organisation: one
+
+two:
+  title: MyString
+  date: 2019-07-22 16:14:14
+  location: MyString
+  dress_code: MyString
+  student: two
+  organisation: two
