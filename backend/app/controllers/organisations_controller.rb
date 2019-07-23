@@ -1,51 +1,57 @@
 class OrganisationsController < ApplicationController
   # before_action :set_organisation, only: [:show, :update, :destroy]
+  
 
-  # # GET /organisations
-  # def index
-  #   @organisations = Organisation.all
 
-  #   render json: @organisations
-  # end
+  def login
+    org = Organisation.find_by(email:params[:email])
+    if org
+      render json: org
+    else
+      render json: {error: "LOG IN UNSUCCESSFUL", status: 401}
+    end
+  end
 
-  # # GET /organisations/1
-  # def show
-  #   render json: @organisation
-  # end
 
-  # # POST /organisations
-  # def create
-  #   @organisation = Organisation.new(organisation_params)
+  def index
+    organisations = Organisation.all
+    render json: organisations
+  end
 
-  #   if @organisation.save
-  #     render json: @organisation, status: :created, location: @organisation
-  #   else
-  #     render json: @organisation.errors, status: :unprocessable_entity
-  #   end
-  # end
+  def show
+    organisation = Organisation.find(params[:id])
+    render json: organisation
+  end
 
-  # # PATCH/PUT /organisations/1
-  # def update
-  #   if @organisation.update(organisation_params)
-  #     render json: @organisation
-  #   else
-  #     render json: @organisation.errors, status: :unprocessable_entity
-  #   end
-  # end
+  def create
+    organisation = Organisation.new(organisation_params)
+    if organisation.save
+      render json: organisation
+    else
+      render json: {"error": "cannot create organisation"}
+    end
+  end
 
-  # # DELETE /organisations/1
-  # def destroy
-  #   @organisation.destroy
-  # end
+  def update
+    organisation = Organisation.find(params[:id])
+    if organisation.update(organisation_params)
+      render json: organisation
+    else
+      render json: {"error": "update unsuccessful"}
+    end
+  end
 
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_organisation
-  #     @organisation = Organisation.find(params[:id])
-  #   end
+  def destroy
+    organisation = Organisation.find(params[:id])
+    organisation.destroy
+  end
 
-  #   # Only allow a trusted parameter "white list" through.
-  #   def organisation_params
-  #     params.require(:organisation).permit(:email, :name, :description)
-  #   end
+  private
+
+  def organisation_params
+    params.require(:organisation).permit(:email, :name, :description)
+  end
+
+
+
 end
