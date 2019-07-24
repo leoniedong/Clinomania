@@ -3,31 +3,29 @@ class EventsController < ApplicationController
 
   def index
     events = Event.all
-    render json: events
+    render json: events, include: [:organisation, :student]
   end
 
   def show
     event = Event.find(params[:id])
-    render json: @event
+    render json: event, include: [:organisation, :student]
   end
 
   def create
-    event = Event.find(params[:id])
     event = Event.new(event_params)
-
     if event.save
-      render json: event, status: :created, location: @event
+      render json: event, include: [:organisation, :student]
     else
-      render json: event.errors, status: :unprocessable_entity
+      render json: event.errors
     end
   end
 
   def update
     event = Event.find(params[:id])
     if event.update(event_params)
-      render json: event
+      render json: event, include: [:organisation, :student]
     else
-      render json: event.errors, status: :unprocessable_entity
+      render json: event.errors
     end
   end
 
@@ -37,7 +35,9 @@ class EventsController < ApplicationController
   end
 
   private
+
     def event_params
-      params.require(:event).permit(:title, :date, :location, :dress_code, :student_id, :organisation_id)
+      params.require(:event).permit(:title, :date, :location, :dress_code, :student_id, :organisation_id, :speakers, :contact_email, :category, :tags)
     end
+    
 end

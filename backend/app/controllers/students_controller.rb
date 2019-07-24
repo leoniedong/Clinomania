@@ -15,20 +15,19 @@ class StudentsController < ApplicationController
 
   def index
     students = Student.all
-
-    render json: students
+    render json: students, include: [:events]
   end
 
   def show
     student = Student.find(params[:id])
-    render json: student
+    render json: student, include: [:events]
   end
 
   def create
     student = Student.new(student_params)
 
     if student.save
-      render json: student
+      render json: student, include: [:events]
     else
       render json: {"error": "Cannot create student"}, status: 406
     end
@@ -37,7 +36,7 @@ class StudentsController < ApplicationController
   def update
     student = Student.find(params[:id])
     if student.update(student_params)
-      render json: student
+      render json: student, include: [:events]
     else
       render json: student.errors, status: :unprocessable_entity
     end

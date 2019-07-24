@@ -15,18 +15,18 @@ class OrganisationsController < ApplicationController
 
   def index
     organisations = Organisation.all
-    render json: organisations
+    render json: organisations, include: [:events]
   end
 
   def show
     organisation = Organisation.find(params[:id])
-    render json: organisation
+    render json: organisation, include: [:events]
   end
 
   def create
     organisation = Organisation.new(organisation_params)
     if organisation.save
-      render json: organisation
+      render json: organisation, include: [:events]
     else
       render json: {"error": "cannot create organisation"}
     end
@@ -35,7 +35,7 @@ class OrganisationsController < ApplicationController
   def update
     organisation = Organisation.find(params[:id])
     if organisation.update(organisation_params)
-      render json: organisation
+      render json: organisation, include: [:events]
     else
       render json: {"error": "update unsuccessful"}
     end

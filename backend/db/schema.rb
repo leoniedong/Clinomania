@@ -17,6 +17,10 @@ ActiveRecord::Schema.define(version: 2019_07_22_201414) do
     t.datetime "date"
     t.string "location"
     t.string "dress_code"
+    t.string "speakers"
+    t.string "contact_email"
+    t.string "category"
+    t.string "tags"
     t.integer "student_id"
     t.integer "organisation_id"
     t.datetime "created_at", null: false
