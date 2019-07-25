@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
   def login
     student = Student.find_by(email:params[:email])
     if student
-      render json: student
+      render json: student, :include => {:tickets => {:include => :event}}
     else
       render json: {error: "LOG IN UNSUCCESSFUL", status: 401}
     end
@@ -15,19 +15,19 @@ class StudentsController < ApplicationController
 
   def index
     students = Student.all
-    render json: students, include: [:events]
+    render json: students, :include => {:tickets => {:include => :event}}
   end
 
   def show
     student = Student.find(params[:id])
-    render json: student, include: [:events]
+    render json: student, :include => {:tickets => {:include => :event}}
   end
 
   def create
     student = Student.new(student_params)
 
     if student.save
-      render json: student, include: [:events]
+      render json: student, :include => {:tickets => {:include => :event}}
     else
       render json: {"error": "Cannot create student"}, status: 406
     end
@@ -36,7 +36,7 @@ class StudentsController < ApplicationController
   def update
     student = Student.find(params[:id])
     if student.update(student_params)
-      render json: student, include: [:events]
+      render json: student, :include => {:tickets => {:include => :event}}
     else
       render json: student.errors, status: :unprocessable_entity
     end

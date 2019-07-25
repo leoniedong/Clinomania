@@ -9,7 +9,6 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.string :contact_email
       t.string :category
       t.string :tags
-      t.references :student, foreign_key: true
       t.references :organisation, foreign_key: true
 
       t.timestamps
