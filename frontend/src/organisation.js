@@ -124,7 +124,6 @@ function displayOrgHomePage(org){
             "tags": e.target.tags.value,
             "organisation_id": localStorage.getItem('user_id')
         })
-        // debugger
         fetch(EVENTS_URL, {
             method: "POST",
             headers: {
@@ -146,13 +145,11 @@ function displayOrgHomePage(org){
         const eventId = e.target.dataset.id
         
         if (e.target.className === 'edit-event') {
-            // debugger
             const currentEventBox = e.target.parentElement
             fetch(`${EVENTS_URL}/${eventId}`)
             .then(res => res.json())
             .then(event => {
                 let eventBox = e.target.parentElement
-                debugger
                 eventBox.innerHTML = `
                 <form class="edit-event-info">
                     <h3>Title: <input type="text" name="title" value="${event.title}"></h3>
@@ -169,7 +166,6 @@ function displayOrgHomePage(org){
                 const editEventForm = document.querySelector('.edit-event-info')
                 editEventForm.addEventListener('submit', function(e){
                     e.preventDefault()
-                    // debugger
                     fetch(`${EVENTS_URL}/${eventId}`, {
                         method: "PATCH",
                         headers: {
@@ -189,7 +185,6 @@ function displayOrgHomePage(org){
                     })
                     .then(res => res.json())
                     .then(event => {
-                        // debugger
                         currentEventBox.innerHTML = `
                         <div class="event-box">
                             <h3>${event.title}</h3>

@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
     console.log('Content loaded')
     console.log(localStorage)
 
+
     /** if a user is logged in */
     if(localStorage.getItem('user_id')){
 
@@ -58,155 +59,149 @@ function capitalise(word) {
 
 function displayLogin() {
     mainContainer.innerHTML = `
-    <h1>Student login</h1>
-    <form id="student-login">
-        Email: <input type="email" name="email">
-        <input type="submit">
-    </form>
+    <div class="container" id="container">
+        <div id="login" class="form-container login-container">
+            <div class="pills">
+                <h3 style="text-align:left;float:left;">Student login</h3>
+                <h3 style="text-align:right;float:right;">Organisation login</h3>
+            </div>
+            <div id="render-login">
+                <form id="student-login">
+                    <h3>Student login</h3>
+                    Email: <input type="email" name="email" placeholder:"Email address">
+                    <input type="submit" class="button">
+                </form>
+            </div>
+        </div>
 
-    <h1>Organisation login</h1>
-    <form id="org-login">
-        Email: <input type="email" name="email">
-        <input type="submit">
-    </form>
+        <div id="signup" class="form-container signup-container">
+            <div class="pills">
+                <h3 style="text-align:left;float:left;">New student</h3>
+                <h3 style="text-align:right;float:right;">New organisation</h3>
+            </div>
+            
+            <div id="render-signup">
+                <form id="signup-student">
+                    <h3>Create a new student account</h3>
+                    <input type="text" name="firstname" placeholder="First Name (required)" required><br>
+                    <input type="text" name="lastname" placeholder="Last name (required)" required><br>
+                    <input type="email" name="email" placeholder="Email (required)" required><br>
+                    Year: 
+                    <select name="year">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select><br>
+                    <input type="text" name="major" placeholder="Major"><br>
+                    <input type="submit" value="create student account" class="button">
+                </form>
 
-    <h1>New user? Create a new account</h1>
-    <h2>Student</h2>
-    <form id="signup-student">
-        First name: 
-        <input type="text" name="firstname"><br>
-        Last name: 
-        <input type="text" name="lastname"><br>
-        Email: 
-        <input type="email" name="email"><br>
-        Year: 
-        <select name="year">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-        </select><br>
-        Major:
-        <input type="text" name="major"><br>
-        <input type="submit" value="create student account">
-    </form>
+            </div>
+            
+            
+            
+        </div>
 
-    <h2>Organisation</h2>
-    <form id="signup-org">
-        Name:
-        <input type="text" name="name"><br>
-        Email:
-        <input type="email" name="email"><br>
-        Description:
-        <input type="text" name="description"><br>
-        <input type="submit" value="create organisation account">
-    </form>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Have an account?</p>
+                    <button class="button ghost" id="login-btn">Log In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Don't have an account?</p>
+                    <button class="button ghost" id="signup-btn">Sign Up</button> 
+                </div>
+            </div>
+        </div>
+    </div>
     `
+    studentLogin()
+    studentSignup()
 
-    /** student login */
-    const studentLogin = document.getElementById('student-login')
-    studentLogin.addEventListener('submit', function(e){
-        e.preventDefault()
-        const email = e.target[0].value
-        fetch(`${BASE_URL}/students/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                email
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                alert('Log in unsuccessful')
-            } else {
-                localStorage.setItem("user_id", data.id)
-                if (data.id) {
-                    localStorage.setItem("type", "student")
-                    displayStudentHomePage(data)
-                } else {
-                    displayLogin()
-                }
-            }
-        })
-    })
-
-    /** organisation login */
-    const orgLogin = document.getElementById('org-login')
-    orgLogin.addEventListener('submit', function(e){
-        e.preventDefault()
-        const email = e.target[0].value
-        // debugger
-        fetch(`${BASE_URL}/orgs/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                email
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                alert('Log in unsuccessful')
-            } else {
-                localStorage.setItem("user_id", data.id)
-                if (data.id) {
-                    localStorage.setItem("type", "organisation")
-                    displayOrgHomePage(data)
-                } else {
-                    displayLogin()
-                }
-            }
-        })
+    const userLogin = document.querySelector('div#login')
+    const renderLogin = document.querySelector('div#render-login')
+    userLogin.addEventListener('click', (e) => {
+        /**  student login */
+        if (e.target.innerText === 'Student login') {
+            renderLogin.innerHTML = `
+            <form id="student-login">
+                <h3>Student login</h3>
+                Email: <input type="email" name="email" placeholder:"Email address">
+                <input type="submit" class="button">
+            </form>`
+            studentLogin()
+        } 
+        /** organisation login */
+        else if (e.target.innerText === 'Organisation login') {
+            renderLogin.innerHTML = `
+            <form id="org-login">
+                <h3>Organisation login</h3>
+                Email: <input type="email" name="email" placeholder:"Email address">
+                <input type="submit" class="button">
+            </form>`
+            orgLogin()
+        }
     })
     
-    /** student signup */
-    const signupStudent = document.getElementById('signup-student')
-    signupStudent.addEventListener('submit', function(e){
-        e.preventDefault()
-        fetch(STUDENTS_URL, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                "first_name": e.target.firstname.value, 
-                "last_name": e.target.lastname.value,
-                "email": e.target.email.value, 
-                "year": e.target.year.value, 
-                "major": e.target.major.value
-            })
-        })
-        .then(res => res.json())
-        .then(student => {
-            displayStudentHomePage(student)
-        })
+    const userSignup = document.querySelector('div#signup')
+    const renderSignup = document.querySelector('div#render-signup')
+    userSignup.addEventListener('click', (e) => {
+        /** student signup */
+        if (e.target.innerText === 'New student') {
+            renderSignup.innerHTML = `
+            <form id="signup-student">
+                <h3>Create a new student account</h3>
+                <input type="text" name="firstname" placeholder="First Name (required)" required><br>
+                <input type="text" name="lastname" placeholder="Last name (required)" required><br>
+                <input type="email" name="email" placeholder="Email (required)" required><br>
+                Year: 
+                <select name="year">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select><br>
+                <input type="text" name="major" placeholder="Major"><br>
+                <input type="submit" value="create student account" class="button">
+            </form>`
+            studentSignup()
+        }
+        /** organisation signup */
+        else if (e.target.innerText === 'New organisation') {
+            renderSignup.innerHTML = `
+            <form id="signup-org">
+                <h3>Create a new organisation account</h3>
+                <input type="text" name="name" placeholder="Name (required)" required><br>
+                <input type="email" name="email" placeholder="Email (required)" required><br>
+                <input type="text" name="description" placeholder="Description"><br>
+                <input type="submit" class="button" value="create organisation account">
+            </form>`
+            orgSignup()
+        }
+    })
+    
+    
+    // /** student signup */
+    // studentSignup()
+
+    // /** organisation signup */
+    // orgSignup()
+
+
+    /** overlay transition */
+    const signUpBtn = document.getElementById('signup-btn')
+    const logInBtn = document.getElementById('login-btn')
+    const container = document.getElementById('container')
+
+    signUpBtn.addEventListener('click', ()=>{
+        container.classList.add('right-panel-active')
     })
 
-    /** organisation signup */
-    const signupOrg = document.getElementById('signup-org')
-    signupOrg.addEventListener('submit', function(e){
-        e.preventDefault()
-        fetch(ORGS_URL, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                "name": e.target.name.value, 
-                "email": e.target.email.value, 
-                "description": e.target.description.value
-            })
-        })
-        .then(res => res.json())
-        .then(org => {
-            displayOrgHomePage(org)
-        })
+    logInBtn.addEventListener('click', ()=>{
+        container.classList.remove('right-panel-active')
     })
 }

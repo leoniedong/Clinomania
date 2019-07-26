@@ -33,7 +33,5 @@ function showEvent(event){
             <p>Tags: ${event.tags}</p>
         </div>
     </div>`
-    
-    // if (event.students.include)
 }
 

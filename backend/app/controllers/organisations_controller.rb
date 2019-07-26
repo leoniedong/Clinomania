@@ -1,6 +1,6 @@
 class OrganisationsController < ApplicationController
   # before_action :set_organisation, only: [:show, :update, :destroy]
-  
+  # has_secure_password
 
 
   def login
@@ -28,7 +28,7 @@ class OrganisationsController < ApplicationController
     if organisation.save
       render json: organisation, include: [:events]
     else
-      render json: {"error": "cannot create organisation"}
+      render json: {"error": orgnanisation.errors.full_messages}
     end
   end
 
@@ -37,7 +37,7 @@ class OrganisationsController < ApplicationController
     if organisation.update(organisation_params)
       render json: organisation, include: [:events]
     else
-      render json: {"error": "update unsuccessful"}
+      render json: {"error": organisation.errors.full_messages}
     end
   end
 

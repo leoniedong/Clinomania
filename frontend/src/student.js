@@ -1,8 +1,7 @@
 function displayStudentHomePage(student){
     let editStudent = false
-
-
     let mainContainer = document.querySelector('main')
+
     mainContainer.innerHTML = `
     <h2>You are logged in as: ${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
 
@@ -105,28 +104,53 @@ function displayStudentHomePage(student){
         displayLogin()
     })
 
+    displayAllEvents()
     /** display all events */
-    fetch(EVENTS_URL)
-    .then(res => res.json())
-    .then(events => {
-        events.forEach(event => {
-            const eventDiv = document.querySelector('div#events')
-            eventDiv.innerHTML += `
-            <div class="event-box">
-                <h3>${event.title}</h3>
-                <button class="sign-up-event" data-id=${event.id}>Sign up</button>
-                <div class="event-info">
-                    <p>Location: ${event.location}</p>
-                    <p>Date: ${event.date}</p>
-                    <p>Dress code: ${event.dress_code}</p>
-                    <p>Speakers: ${event.speakers}</p>
-                    <p>Contact: ${event.contact_email}</p>
-                    <p>Category: ${event.category}</p>
-                    <p>Tags: ${event.tags}</p>
-                </div>
-            </div>`
+    function displayAllEvents() {
+        fetch(EVENTS_URL)
+        .then(res => res.json())
+        .then(events => {
+            events.forEach(event => {
+                console.log(`student signed up? ` + event.students.map(student => student.id).includes(student.id))
+                /** show sign up button if not signed up */
+                if (!event.students.map(student => student.id).includes(student.id)){
+                    const eventDiv = document.querySelector('div#events')
+                    eventDiv.innerHTML += `
+                    <div class="event-box">
+                        <h3>${event.title}</h3>
+                        <button class="sign-up-event" data-id=${event.id}>+</button>
+                        <div class="event-info">
+                            <p>Location: ${event.location}</p>
+                            <p>Date: ${event.date}</p>
+                            <p>Dress code: ${event.dress_code}</p>
+                            <p>Speakers: ${event.speakers}</p>
+                            <p>Contact: ${event.contact_email}</p>
+                            <p>Category: ${event.category}</p>
+                            <p>Tags: ${event.tags}</p>
+                        </div>
+                    </div>`
+                } 
+                /** no sign up button if not signed up */
+                else {
+                    const eventDiv = document.querySelector('div#events')
+                    eventDiv.innerHTML += `
+                    <div class="event-box">
+                        <h3>${event.title}</h3>
+                        <div class="event-info">
+                            <p>Location: ${event.location}</p>
+                            <p>Date: ${event.date}</p>
+                            <p>Dress code: ${event.dress_code}</p>
+                            <p>Speakers: ${event.speakers}</p>
+                            <p>Contact: ${event.contact_email}</p>
+                            <p>Category: ${event.category}</p>
+                            <p>Tags: ${event.tags}</p>
+                        </div>
+                    </div>`
+                }
+            })
         })
-    })
+    }
+    
 
     /** sign up for events => creating a ticket */
     const eventBlock = document.getElementById('events')
@@ -134,7 +158,6 @@ function displayStudentHomePage(student){
         if (e.target.className === 'sign-up-event'){
             const eventId = e.target.dataset.id
             const studentId = localStorage.getItem('user_id')
-
             /** creating a ticket once clicked sign up button */
             fetch(TICKETS_URL, {
                 method: "POST",
@@ -167,7 +190,6 @@ function displayStudentHomePage(student){
 
     function displayAllTickets() {
         myTickets.innerHTML = ''
-        // debugger
         student.tickets.forEach(ticket => {
             myTickets.innerHTML += `
             <div class="my-event">
@@ -181,7 +203,6 @@ function displayStudentHomePage(student){
     
     /** remove ticket */
     myTickets.addEventListener('click', function(e){
-        // debugger
         if (e.target.className === 'del-ticket') {
             const ticketId = e.target.dataset.id
             fetch(`${TICKETS_URL}/${ticketId}`, {
@@ -189,6 +210,8 @@ function displayStudentHomePage(student){
             })
             .then(function(){
                 e.target.parentElement.remove()
+                eventBlock.innerHTML = ''
+                displayAllEvents()
             })
         }
     })

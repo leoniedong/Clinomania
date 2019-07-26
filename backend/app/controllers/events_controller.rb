@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     if event.save
       render json: event, include: [:organisation, :students]
     else
-      render json: { error: event.errors }
+      render json: { error: event.errors.full_messages }
     end
   end
 
@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     if event.update(event_params)
       render json: event, include: [:organisation, :students]
     else
-      render json: event.errors
+      render json: { error: event.errors.full_messages }
     end
   end
 

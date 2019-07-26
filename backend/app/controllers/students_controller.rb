@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   # before_action :set_student, only: [:show, :update, :destroy]
+  # has_secure_password
 
 
   def login
@@ -29,7 +30,7 @@ class StudentsController < ApplicationController
     if student.save
       render json: student, :include => {:tickets => {:include => :event}}
     else
-      render json: {"error": "Cannot create student"}, status: 406
+      render json: {"error": student.errors.full_messages}, status: 406
     end
   end
 
@@ -38,7 +39,7 @@ class StudentsController < ApplicationController
     if student.update(student_params)
       render json: student, :include => {:tickets => {:include => :event}}
     else
-      render json: student.errors, status: :unprocessable_entity
+      render json: {"error": student.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
@@ -47,17 +48,9 @@ class StudentsController < ApplicationController
     student.destroy
   end
 
-  # def name
-  #   self.first_name + " " + self.last_name
-  # end
-
   private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_student
-  #     @student = Student.find(params[:id])
-  #   end
-
     def student_params
       params.require(:student).permit(:email, :year, :major, :first_name, :last_name)
     end
+
 end
