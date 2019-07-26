@@ -76,13 +76,10 @@ function displayOrgHomePage(org){
                 displayLogin(),
                 localStorage.clear()
             })
-        } 
-        /** logout */
-        else if (e.target.id === 'logout'){
-            localStorage.clear()
-            displayLogin()
         }
     })
+
+    logout()
 
     /** all events */
     mainContainer.innerHTML += `

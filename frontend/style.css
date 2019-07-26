@@ -51,11 +51,15 @@ a {
     background: white;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    position: relative;
+    position: absolute;
     overflow: hidden;
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    text-align: center;
+    /* top: 20%; */
+    /* left: 20%; */
+    /* margin: 0; */
 }
 
 .form-container form {
@@ -141,8 +145,8 @@ a {
 
 .overlay {
     background: #ff416c;
-    /* background: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d) no-repeat 0 0 / cover; */
-    background: linear-gradient(to right, #E55D87, #5FC3E4) no-repeat 0 0 / cover;
+    background: linear-gradient(to right, #47B2D3, #fbd786, #f7797d) no-repeat 0 0 / cover;
+    /* background: linear-gradient(to right, #E55D87, #5FC3E4) no-repeat 0 0 / cover; */
     color: white;
     position: relative;
     left: -100%;

@@ -28,7 +28,8 @@ class OrganisationsController < ApplicationController
     if organisation.save
       render json: organisation, include: [:events]
     else
-      render json: {"error": orgnanisation.errors.full_messages}
+      byebug
+      render json: {"error": organisation.errors.full_messages}
     end
   end
 

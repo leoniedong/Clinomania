@@ -46,6 +46,7 @@ function orgSignup(){
         })
         .then(res => res.json())
         .then(org => {
+            console.log(org)
             if (org.error){
                 debugger
                 alert(JSON.stringify(org.error.join('\n')))

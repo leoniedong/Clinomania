@@ -15,7 +15,7 @@ function studentLogin(){
         .then(res => res.json())
         .then(data => {
             if (data.error) {
-                alert(JSON.stringify(data.error.join('\n')))
+                alert(data.error)
             } else {
                 localStorage.setItem("user_id", data.id)
                 if (data.id) {
@@ -46,7 +46,7 @@ function orgLogin(){
         .then(res => res.json())
         .then(data => {
             if (data.error) {
-                alert(JSON.stringify(data.error.join('\n')))
+                alert(data.error)
             } else {
                 localStorage.setItem("user_id", data.id)
                 if (data.id) {
@@ -58,5 +58,13 @@ function orgLogin(){
             }
         })
     })
+}
 
+function logout(){
+    mainContainer.addEventListener('click', (e) => {
+        if (e.target.id === 'logout') {
+            localStorage.clear()
+            displayLogin()
+        }
+    })
 }
