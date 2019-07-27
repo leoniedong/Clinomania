@@ -1,34 +1,11 @@
 function displayOrgHomePage(org){
 
     /*** constants */
-    const mainContainer = document.querySelector('main')
-
-
 
     /** other */
     let editOrg = false
 
-
-
-    mainContainer.innerHTML = `
-    <h2>You are logged in as: ${capitalise(org.name)} (organisation)</h2>
-    
-    <button id="logout">Logout</button>
-
-    <button id="del-org" data-id=${org.id}>Delete account</button>
-
-    <button id="edit-org-btn">Edit profile</button>
-    <div class="container" style="display:none">
-        <form id="edit-org-form">
-            Name: 
-            <input type="text" name="name" value="${org.name}"><br>
-            Email: 
-            <input type="email" name="email" value="${org.email}"><br>
-            Description: 
-            <input type="text" name="description" value="${org.description}">
-            <input type="submit" value="done" data-id=${org.id}>
-        </form>
-    </div>`
+    displayOrgMainContent(org)
 
     /** edit org profile */
     document.addEventListener('click', function(e){
@@ -58,7 +35,7 @@ function displayOrgHomePage(org){
                     })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
+                        // console.log(data)
                         displayOrgHomePage(data)
                     })
                 }) 
@@ -215,4 +192,27 @@ function displayOrgHomePage(org){
             })
         }
     })
+}
+
+function displayOrgMainContent(org) {
+    const mainContainer = document.querySelector('main')
+    mainContainer.innerHTML = `
+    <h2>You are logged in as: ${capitalise(org.name)} (organisation)</h2>
+    
+    <button id="logout">Logout</button>
+
+    <button id="del-org" data-id=${org.id}>Delete account</button>
+
+    <button id="edit-org-btn">Edit profile</button>
+    <div class="container" style="display:none">
+        <form id="edit-org-form">
+            Name: 
+            <input type="text" name="name" value="${org.name}"><br>
+            Email: 
+            <input type="email" name="email" value="${org.email}"><br>
+            Description: 
+            <input type="text" name="description" value="${org.description}">
+            <input type="submit" value="done" data-id=${org.id}>
+        </form>
+    </div>`
 }

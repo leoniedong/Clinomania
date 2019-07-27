@@ -4,6 +4,8 @@ const STUDENTS_URL = `${BASE_URL}/students`
 const ORGS_URL = `${BASE_URL}/organisations`
 const EVENTS_URL = `${BASE_URL}/events`
 const TICKETS_URL = `${BASE_URL}/tickets`
+
+/*** constants */
 const mainContainer = document.querySelector('main')
 
 /** document */
@@ -11,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function(){
     /***** constants *****/
     const myTickets = document.getElementById('my-tickets')
     
-
-
     console.log('Content loaded')
     console.log(localStorage)
 
