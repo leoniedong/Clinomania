@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
     console.log('Content loaded')
     console.log(localStorage)
 
-
+    
     /** if a user is logged in */
     if(localStorage.getItem('user_id')){
 
@@ -57,6 +57,7 @@ function capitalise(word) {
     return word[0].toUpperCase() + word.slice(1)
 }
 
+/** login and signup forms */
 function displayLogin() {
     mainContainer.innerHTML = `
     <div class="container" id="container">
@@ -65,12 +66,15 @@ function displayLogin() {
                 <h3 style="text-align:left;float:left;">Student login</h3>
                 <h3 style="text-align:right;float:right;">Organisation login</h3>
             </div>
-            <div id="render-login">
-                <form id="student-login">
-                    <h3>Student login</h3>
-                    Email: <input type="email" name="email" placeholder:"Email address">
-                    <input type="submit" class="button">
-                </form>
+
+            <div class="form-wrapper">
+                <div id="render-login">
+                    <form id="student-login">
+                        <h3>Student login</h3>
+                        Email: <input type="email" name="email" placeholder:"Email address">
+                        <input type="submit" class="button">
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -80,27 +84,25 @@ function displayLogin() {
                 <h3 style="text-align:right;float:right;">New organisation</h3>
             </div>
             
-            <div id="render-signup">
-                <form id="signup-student">
-                    <h3>Create a new student account</h3>
-                    <input type="text" name="firstname" placeholder="First Name (required)" required><br>
-                    <input type="text" name="lastname" placeholder="Last name (required)" required><br>
-                    <input type="email" name="email" placeholder="Email (required)" required><br>
-                    Year: 
-                    <select name="year">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select><br>
-                    <input type="text" name="major" placeholder="Major"><br>
-                    <input type="submit" value="create student account" class="button">
-                </form>
-
+            <div class="form-wrapper">
+                <div id="render-signup">
+                    <form id="signup-student">
+                        <h3>Create a new student account</h3>
+                        <input type="text" name="firstname" placeholder="First Name (required)" required><br>
+                        <input type="text" name="lastname" placeholder="Last name (required)" required><br>
+                        <input type="email" name="email" placeholder="Email (required)" required><br> 
+                        <select name="year">
+                            <option value="year" disabled selected>Year</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select><br>
+                        <input type="text" name="major" placeholder="Major"><br>
+                        <input type="submit" value="create student account" class="button">
+                    </form>
+                </div>
             </div>
-            
-            
-            
         </div>
 
         <div class="overlay-container">

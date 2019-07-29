@@ -75,7 +75,8 @@ function displayOrgHomePage(org){
     <form id="create-event">
         Title: <input type="text" name="title" required><br>
         Location: <input id="text" name="location" required><br>
-        Date: <input type="datetime-local" name="date" required><br>
+        Start date: <input type="datetime-local" name="start" required><br>
+        End date: <input type="datetime-local" name="end" required><br>
         Dress Code: <input type="text" name="dresscode"><br>
         Speakers: <input type="text" name="speakers"><br>
         Contact Email: <input type="email" name="email"><br>
@@ -90,7 +91,8 @@ function displayOrgHomePage(org){
         const body = JSON.stringify({
             "title": e.target.title.value,
             "location": e.target.location.value,
-            "date": e.target.date.value,
+            "start": e.target.start.value,
+            "end": e.target.end.value,
             "dress_code": e.target.dresscode.value,
             "speakers": e.target.speakers.value,
             "contact_email": e.target.email.value,
@@ -129,7 +131,8 @@ function displayOrgHomePage(org){
                     <h3>Title: <input type="text" name="title" value="${event.title}"></h3>
                     <input type="submit" value="done" data-id="${event.id}"><br>
                     Location: <input id="text" name="location" value="${event.location}"><br>
-                    Date: <input type="datetime-local" name="date" value=${event.date.slice(0, -1)}><br>
+                    Start date: <input type="datetime-local" name="start" value=${event.start.slice(0, -1)}><br>
+                    End date: <input type="datetime-local" name="end" value=${event.end.slice(0, -1)}><br>
                     Dress Code: <input type="text" name="dresscode" value="${event.dress_code}"><br>
                     Speakers: <input type="text" name="speakers" value="${event.speakers}"><br>
                     Contact Email: <input type="email" name="contactemail" value="${event.contact_email}"><br>
@@ -149,7 +152,8 @@ function displayOrgHomePage(org){
                         body: JSON.stringify({
                             "title": e.target.title.value,
                             "location": e.target.location.value,
-                            "date": e.target.date.value,
+                            "start": e.target.start.value,
+                            "end": e.target.end.value,                            
                             "dress_code": e.target.dresscode.value,
                             "speakers": e.target.speakers.value,
                             "contact_email": e.target.contactemail.value,
@@ -166,7 +170,8 @@ function displayOrgHomePage(org){
                             <button class="del-event" data-id=${event.id}>Delete</button>
                             <div class="event-info">
                                 <p>Location: ${event.location}</p>
-                                <p>Date: ${event.date}</p>
+                                <p>Start date: ${event.start}</p>
+                                <p>End date: ${event.end}</p>
                                 <p>Dress code: ${event.dress_code}</p>
                                 <p>Speakers: ${event.speakers}</p>
                                 <p>Contact: ${event.contact_email}</p>

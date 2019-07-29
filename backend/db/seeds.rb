@@ -8,4 +8,5 @@
 
 Student.create(first_name: "Lizzie", last_name: "Bennet", email: "lb@hotmail.com", year: 3, major: "English")
 Organisation.create(name: "Cult", description: "We are a cult.", email: "cult@cult.com")
-Event.create(title: "Reunion", location:"bloodcells", date:"2019-08-24T19:04:29.442", dress_code: "naked", speakers:"John Smith", contact_email: "cult@cult.com", category:"education", tags:"fun", organisation_id: 1)
+Event.create(title: "Reunion", location:"bloodcells", start: "2019-07-24T19:04:29.442", end:"2019-07-24T19:05:29.442", dress_code: "N/A", speakers:"John Smith", contact_email: "cult@cult.com", category:"education", tags:"fun", organisation_id: 1)
+Ticket.create()

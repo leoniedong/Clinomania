@@ -34,12 +34,13 @@ class EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     event.destroy
+    render json: { msg: "Successfully destroyed" }, status: :ok
   end
 
   private
 
     def event_params
-      params.require(:event).permit(:title, :date, :location, :dress_code, :organisation_id, :speakers, :contact_email, :category, :tags)
+      params.require(:event).permit(:title, :start, :end, :location, :dress_code, :organisation_id, :speakers, :contact_email, :category, :tags)
     end
     
 end

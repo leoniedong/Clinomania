@@ -38,6 +38,7 @@ class TicketsController < ApplicationController
   def destroy
     ticket = Ticket.find(params[:id])
     ticket.destroy
+    render json: { msg: "Successfully destroyed" }, status: :ok
   end
 
   private

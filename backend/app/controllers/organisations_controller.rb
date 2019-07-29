@@ -45,6 +45,7 @@ class OrganisationsController < ApplicationController
   def destroy
     organisation = Organisation.find(params[:id])
     organisation.destroy
+    render json: { msg: "Successfully destroyed" }, status: :ok
   end
 
   private

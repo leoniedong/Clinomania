@@ -1,13 +1,6 @@
-// function showCalendar(student) {
-//     const studentEvents = student.tickets.map(ticket => ticket.event)
-//     console.log(studentEvents)
-//     const calEl = mainContainer.querySelector('div#calendar')
-//     const calendar = new FullCalendar.Calendar(calEl, {
-//         timeFormat: 'HH:mm',
-//         timeZone: 'UTC',
-//         plugins: ['dayGrid'],
-//         events: studentEvents
-//     })
-
-//     calendar.render()
-// }
+function displayDate(dateString) {
+    let date = new Date(dateString)
+    var options = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false, timeZone: "Zulu"};
+    let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date)
+    return formattedDate
+}

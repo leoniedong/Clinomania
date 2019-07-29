@@ -1,36 +1,53 @@
-function displayStudentHomePage(student){
-    
+let calendar;
+
+function displayStudentHomePage(student){    
     let mainContainer = document.querySelector('main')
 
     mainContainer.innerHTML = `
-    <div id='calendar'></div>
-    <h2>You are logged in as: ${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
+    
+    <div class="nav student">
+        <h2>Home page that does nothing rn</h2>
+        <input type="text" placeholder="Search...">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="clickMenu()">
+            <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2> 
+            <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <p id="profile">View profile</p><br>
+                <p id="logout">Logout</p><br>
 
-    <button id="logout">Logout</button>
+                <button id="edit-student-btn">Edit profile</button>
+                <div class="container" style="display:none">
+                    <form id="edit-student-form">
+                        First name: 
+                        <input type="text" name="firstname" value="${student.first_name}"><br>
+                        Last name: 
+                        <input type="text" name="lastname" value="${student.last_name}"><br>
+                        Email: 
+                        <input type="email" name="email" value="${student.email}"><br>
+                        Year: 
+                        <select name="year" id="select-year">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select><br>
+                        Major:
+                        <input type="text" name="major" value="${student.major}"><br>
+                        <input type="submit" value="done" data-id=${student.id}>
+                    </form>
+                    <button id="del-student" data-id=${student.id}>Delete account</button>
+                </div>
+            </div>
+        </div>
 
-    <button id="del-student" data-id=${student.id}>Delete account</button>
+    
 
-    <button id="edit-student-btn">Edit profile</button>
-    <div class="container" style="display:none">
-        <form id="edit-student-form">
-            First name: 
-            <input type="text" name="firstname" value="${student.first_name}"><br>
-            Last name: 
-            <input type="text" name="lastname" value="${student.last_name}"><br>
-            Email: 
-            <input type="email" name="email" value="${student.email}"><br>
-            Year: 
-            <select name="year" id="select-year">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select><br>
-            Major:
-            <input type="text" name="major" value="${student.major}"><br>
-            <input type="submit" value="done" data-id=${student.id}>
-        </form>
     </div>
+
+
+    <div id='calendar'></div>
 
     <h1>My tickets</h1>
     <div id="my-tickets"></div>
@@ -48,9 +65,8 @@ function displayStudentHomePage(student){
     /** calendar */
     // showCalendar(student)
     const studentEvents = student.tickets.map(ticket => ticket.event)
-    console.log(studentEvents)
     const calEl = mainContainer.querySelector('div#calendar')
-    const calendar = new FullCalendar.Calendar(calEl, {
+    calendar = new FullCalendar.Calendar(calEl, {
         timeFormat: 'HH:mm',
         timeZone: 'UTC',
         plugins: ['dayGrid'],
@@ -58,7 +74,7 @@ function displayStudentHomePage(student){
     })
 
     calendar.render()
-        
+
     /** All student functionalities */
     /** edit profile */
     editStudentProfile(student)
@@ -70,53 +86,12 @@ function displayStudentHomePage(student){
     logout()
     
     
-
-    displayAllEvents()
     /** display all events */
-    function displayAllEvents() {
-        fetch(EVENTS_URL)
-        .then(res => res.json())
-        .then(events => {
-            events.forEach(event => {
-                console.log(`student signed up? ` + event.students.map(student => student.id).includes(student.id))
-                /** show + if not signed up */
-                if (!event.students.map(student => student.id).includes(student.id)){
-                    const eventDiv = document.querySelector('div#events')
-                    eventDiv.innerHTML += `
-                    <div class="event-box">
-                        <h3>${event.title}</h3>
-                        <button class="sign-up-event" data-id=${event.id}>+</button>
-                        <div class="event-info">
-                            <p>Location: ${event.location}</p>
-                            <p>Date: ${event.date}</p>
-                            <p>Dress code: ${event.dress_code}</p>
-                            <p>Speakers: ${event.speakers}</p>
-                            <p>Contact: ${event.contact_email}</p>
-                            <p>Category: ${event.category}</p>
-                            <p>Tags: ${event.tags}</p>
-                        </div>
-                    </div>`
-                } 
-                /** no + if signed up */
-                else {
-                    const eventDiv = document.querySelector('div#events')
-                    eventDiv.innerHTML += `
-                    <div class="event-box">
-                        <h3>${event.title}</h3>
-                        <div class="event-info">
-                            <p>Location: ${event.location}</p>
-                            <p>Date: ${event.date}</p>
-                            <p>Dress code: ${event.dress_code}</p>
-                            <p>Speakers: ${event.speakers}</p>
-                            <p>Contact: ${event.contact_email}</p>
-                            <p>Category: ${event.category}</p>
-                            <p>Tags: ${event.tags}</p>
-                        </div>
-                    </div>`
-                }
-            })
-        })
-    }
+    let studentId = student.id
+    displayAllEvents(studentId)
+
+    
+
     
     /** all the ticket functionalities */
     const myTickets = document.getElementById('my-tickets')
@@ -124,7 +99,7 @@ function displayStudentHomePage(student){
     /** sign up for events => creating a ticket */
     const eventBlock = document.getElementById('events')
     eventBlock.addEventListener('click', function(e){
-        if (e.target.className === 'sign-up-event'){
+        if (e.target.classList.contains('sign-up-event')){
             const eventId = e.target.dataset.id
             const studentId = localStorage.getItem('user_id')
             /** creating a ticket once clicked sign up button */
@@ -142,40 +117,29 @@ function displayStudentHomePage(student){
             .then(res => res.json())
             .then(ticket => {
                 console.log(`added event: ` + `${ticket.event.title}`)
-                myTickets.innerHTML += `
-                <div class="my-event">
-                    <h3>${ticket.event.title}</h3>
-                    <button class="del-ticket" data-id=${ticket.id}>Remove</button>
-                    <p>${ticket.event.location}</p>
-                    <p>${ticket.event.date}</p>
-                </div>`
+                displayTicket(ticket)
+                // myTickets.innerHTML += `
+                // <div class="my-event">
+                //     <h3>${ticket.event.title}</h3>
+                //     <button class="del-ticket" data-id=${ticket.id}>Remove</button>
+                //     <p>${ticket.event.location}</p>
+                //     <p>${ticket.event.date}</p>
+                // </div>`
                 let eventDiv = document.querySelector('div#events')
                 eventDiv.innerHTML = ''
-                displayAllEvents()
-                console.log(calendar)
+                displayAllEvents(student.id)
                 calendar.addEvent(ticket.event)
             })
         }
     })
 
     /** display student's events */
-    displayAllTickets()
+    displayAllTickets(student)
 
-    function displayAllTickets() {
-        myTickets.innerHTML = ''
-        student.tickets.forEach(ticket => {
-            myTickets.innerHTML += `
-            <div class="my-event">
-                <h3>${ticket.event.title}</h3>
-                <button class="del-ticket" data-id=${ticket.id}>Remove</button>
-                <p>Location: ${ticket.event.location}</p>
-                <p>Date: ${ticket.event.date}</p>
-            </div>`
-        })
-    }
+    
     
     /** remove ticket */
-    removeTicket()
+    removeTicket(student.id, calendar)
     
 }
 
@@ -210,7 +174,6 @@ function editStudentProfile(student) {
                 .then(res => res.json())
                 .then(student => {
                     console.log('edited student')
-                    // console.log(student)
                     displayStudentHomePage(student)
                 })
             }) 
@@ -233,4 +196,8 @@ function deleteStudent() {
             localStorage.clear()
         })
     })
+}
+
+function clickMenu() {
+    document.getElementById("dropdown-content").classList.toggle("show")
 }

@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 2019_07_24_185047) do
 
   create_table "events", force: :cascade do |t|
     t.string "title"
-    t.datetime "date"
+    t.datetime "start"
+    t.datetime "end"
     t.string "location"
     t.string "dress_code"
     t.string "speakers"
