@@ -135,8 +135,6 @@ function displayStudentHomePage(student){
 
     /** display student's events */
     displayAllTickets(student)
-
-    
     
     /** remove ticket */
     removeTicket(student.id, calendar)
