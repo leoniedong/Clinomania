@@ -120,13 +120,14 @@ function displayOrgHomePage(org){
     eventList.addEventListener('click', function(e){
         const eventId = e.target.dataset.id
         
-        if (e.target.className === 'edit-event') {
-            const currentEventBox = e.target.parentElement
+        if (e.target.classList.contains('edit-event')) {
+            const currentEventBox = e.target.parentElement.parentElement
             fetch(`${EVENTS_URL}/${eventId}`)
             .then(res => res.json())
             .then(event => {
-                let eventBox = e.target.parentElement
-                eventBox.innerHTML = `
+                // let eventBox = 
+                // debugger
+                currentEventBox.innerHTML = `
                 <form class="edit-event-info">
                     <h3>Title: <input type="text" name="title" value="${event.title}"></h3>
                     <input type="submit" value="done" data-id="${event.id}"><br>
@@ -138,8 +139,8 @@ function displayOrgHomePage(org){
                     Contact Email: <input type="email" name="contactemail" value="${event.contact_email}"><br>
                     Category: <input type="text" name="category" value="${event.category}"><br>
                     Tags: <input type="text" name="tags" value="${event.tags}"><br>
-                </form>
-                `
+                </form>`
+
                 const editEventForm = document.querySelector('.edit-event-info')
                 editEventForm.addEventListener('submit', function(e){
                     e.preventDefault()
@@ -164,32 +165,34 @@ function displayOrgHomePage(org){
                     .then(res => res.json())
                     .then(event => {
                         currentEventBox.innerHTML = `
-                        <div class="event-box">
-                            <h3>${event.title}</h3>
-                            <button class="edit-event" data-id=${event.id}}>Edit</button>
-                            <button class="del-event" data-id=${event.id}>Delete</button>
+                            <div class="event-title-container">
+                                <h3 class="inline">${event.title}</h3>
+                                <i class="fa fa-pencil-square-o edit-event" aria-hidden="true" data-id=${event.id}></i>
+                                <i class="fa fa-trash del-event" aria-hidden="true" data-id=${event.id}></i>
+                            </div>
+                            
                             <div class="event-info">
                                 <p>Location: ${event.location}</p>
-                                <p>Start date: ${event.start}</p>
-                                <p>End date: ${event.end}</p>
+                                <p>Start date: ${displayDate(event.start)}</p>
+                                <p>End date: ${displayDate(event.end)}</p>              
                                 <p>Dress code: ${event.dress_code}</p>
                                 <p>Speakers: ${event.speakers}</p>
                                 <p>Contact: ${event.contact_email}</p>
                                 <p>Category: ${event.category}</p>
                                 <p>Tags: ${event.tags}</p>
-                            </div>
-                        </div>
-                        `
+                            </div>`
                     })
                 })
             })
         } 
+
         /** delete events */
-        else if (e.target.className === 'del-event') {
+        else if (e.target.classList.contains('del-event')) {
             const orgId = localStorage.getItem('user_id')
             fetch(`${EVENTS_URL}/${eventId}`, {
                 method: "DELETE"
             })
+
             fetch(`${ORGS_URL}/${orgId}`)
             .then(res => res.json())
             .then(org => {

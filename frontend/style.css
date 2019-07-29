@@ -49,8 +49,11 @@ selected option:disabled {
     display: inline-block;
 }
 
-.event-title-container i {
+i {
     display: inline-block;
+}
+
+i:hover {
     color: #47B2D3;
 }
 
