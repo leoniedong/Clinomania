@@ -1,17 +1,15 @@
 class CategoriesController < ApplicationController
   # before_action :set_category, only: [:show, :update, :destroy]
 
-  # GET /categories
   def index
     categories = Category.all
 
     render json: categories.to_json(include: :events)
   end
 
-  # GET /categories/1
   def show
     category = Category.find(params[:id])
-    render json: category
+    render json: category, include: :events
   end
 
   # # POST /categories

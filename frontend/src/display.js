@@ -14,25 +14,28 @@ function displayAllEvents(studentId) {
 
 /** displaying events for students */
 function showEvent(event){
-    const eventDiv = document.querySelector('div#events')
-    eventDiv.innerHTML += `
-    <div class="event-box">
-        <div class="event-title-container" id="etc-${event.id}">
-            <h3>${event.title}</h3>
-        </div>
-        
-        <div class="event-info">
-            <p>Location: ${event.location}</p>
-            <p>Start date: ${displayDate(event.start)}</p>
-            <p>End date: ${displayDate(event.end)}</p>
-            <p>Dress code: ${event.dress_code}</p>
-            <p>Speakers: ${event.speakers}</p>
-            <p>Contact: ${event.contact_email}</p>
-            <p>Category: ${event.category.name}</p>
-            <p>Tags: ${event.tags}</p>
-            <p>Notes: ${event.notes}</p>
-        </div>
-    </div>`
+    categoryAdapter.get(event.category_id).then(category => {
+        const categoryName = category.name
+        const eventDiv = document.querySelector('div#events')
+        eventDiv.innerHTML += `
+        <div class="event-box">
+            <div class="event-title-container" id="etc-${event.id}">
+                <h3>${event.title}</h3>
+            </div>
+            
+            <div class="event-info">
+                <p>Location: ${event.location}</p>
+                <p>Start date: ${displayDate(event.start)}</p>
+                <p>End date: ${displayDate(event.end)}</p>
+                <p>Dress code: ${event.dress_code}</p>
+                <p>Speakers: ${event.speakers}</p>
+                <p>Contact: ${event.contact_email}</p>
+                <p>Category: ${categoryName}</p>
+                <p>Tags: ${event.tags}</p>
+                <p>Notes: ${event.notes}</p>
+            </div>
+        </div>`
+    })
 }
 
 /** displaying events for organisations */
