@@ -11,8 +11,13 @@ function displayStudentHomePage(student){
         <button id="filter">Filter</button>
         <div id="filter-container" style="display:none">
             <form id="filter-bar">
-                <select id="filter-category">Category</select>
-                <select id="filter-day">Day</select>
+                <select id="filter-category">Category
+                    <option disabled selected>-- By category --</option>
+                </select>
+                <select id="filter-day">Day
+                    <option disabled selected>-- By day --</option>
+                </select>
+                <input type="submit" value="apply">
             </form>
         </div>
 
@@ -72,15 +77,32 @@ function displayStudentHomePage(student){
     </div>
     `
 
+    const filterCategoryList = document.getElementById('filter-category')
+    categoryAdapter.getAll().then(categories => {
+        categories.forEach(category => {
+            filterCategoryList.innerHTML += `<option value=${category.id}>${category.name}</option>`
+        })
+    })
+
     let filterDisplay = false
     document.getElementById('filter').addEventListener('click', (e) => {
         filterDisplay = !filterDisplay
         const filterContainer = document.getElementById('filter-container')
-        console.log(filterContainer)
         if (filterDisplay) {
             filterContainer.style.display = 'block'
-            let categories = eventAdapter.getAll().then(events => {
-                events.map(event => event.category)
+            const filterBar = document.getElementById('filter-bar')
+            filterBar.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const selectedCategoryId = e.target[0].value
+                categoryAdapter.get(selectedCategoryId).then(cat => {
+                    console.log(cat)
+                    const eventDiv = document.querySelector('div#events')
+                    eventDiv.innerHTML = ''
+                    cat.events.forEach(event => {
+                        debugger
+                        showEvent(event, student.id)
+                    })
+                })
             })
         } else {
             filterContainer.style.display = 'none'

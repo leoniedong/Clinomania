@@ -90,6 +90,7 @@ function editOrDeleteEvent() {
                     Tags: <input type="text" name="tags" value="${event.tags}"><br>
                 </form>`
                 
+                /*** inputting options to category selection */
                 const selectCategoryList = document.getElementById('select-category')
                 categoryAdapter.getAll().then(categories => {
                     categories.forEach(category => {

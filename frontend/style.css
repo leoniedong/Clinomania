@@ -40,10 +40,10 @@ selected option:disabled {
 .event-box {
     border: grey solid 1px;
     padding: 1rem;
-    width: auto;
+    width: 370px;
     height: 25rem;
     display: inline-grid;
-    margin: 1rem 2rem;
+    margin: 1rem;
     /* box-shadow: 3px 4px #e04b52 */
     border-radius: 10px;
 }

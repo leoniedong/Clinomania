@@ -1,21 +1,16 @@
 function displayAllEvents(studentId) {
-    const adapter = new Adapter(EVENTS_URL)
-    adapter.getAll().then(events => {
+    eventAdapter.getAll().then(events => {
+        // console.log(events)
         events.forEach(event => {
-            showEvent(event)
-            /** show + if not signed up */
-            if (!event.students.map(student => student.id).includes(studentId)){
-                const etc = document.getElementById(`etc-${event.id}`)
-                etc.innerHTML += `<i class="fa fa-calendar-plus-o sign-up-event" data-id=${event.id} aria-hidden="true"></i>`
-            } 
+            showEvent(event, studentId)
         })
     })
 }
 
 /** displaying events for students */
-function showEvent(event){
-    categoryAdapter.get(event.category_id).then(category => {
-        const categoryName = category.name
+function showEvent(event, studentId){
+    // categoryAdapter.get(event.category_id).then(category => {
+        // const categoryName = category.name
         const eventDiv = document.querySelector('div#events')
         eventDiv.innerHTML += `
         <div class="event-box">
@@ -30,12 +25,21 @@ function showEvent(event){
                 <p>Dress code: ${event.dress_code}</p>
                 <p>Speakers: ${event.speakers}</p>
                 <p>Contact: ${event.contact_email}</p>
-                <p>Category: ${categoryName}</p>
+                <p>Category: ${event.category.name}</p>
                 <p>Tags: ${event.tags}</p>
                 <p>Notes: ${event.notes}</p>
             </div>
         </div>`
+    // })
+    
+    /** show + if not signed up */
+    eventAdapter.get(event.id).then(event => {
+        if (!event.students.map(student => student.id).includes(studentId)){
+            const etc = document.getElementById(`etc-${event.id}`)
+            etc.innerHTML += `<i class="fa fa-calendar-plus-o sign-up-event" data-id=${event.id} aria-hidden="true"></i>`
+        } 
     })
+    
 }
 
 /** displaying events for organisations */

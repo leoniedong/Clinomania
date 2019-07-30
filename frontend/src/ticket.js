@@ -21,6 +21,7 @@ function createTicket(student) {
     eventBlock.addEventListener('click', function(e){
         if (e.target.classList.contains('sign-up-event')){
             const eventId = e.target.dataset.id
+            console.log(student.id)
             const studentId = localStorage.getItem('user_id')
             /** creating a ticket once clicked sign up button */
             let body = {

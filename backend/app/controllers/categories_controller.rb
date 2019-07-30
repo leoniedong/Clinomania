@@ -3,13 +3,16 @@ class CategoriesController < ApplicationController
 
   def index
     categories = Category.all
-
-    render json: categories.to_json(include: :events)
+    render json: categories.to_json(:include => {:events => {
+      :include => :category
+    }})
   end
 
   def show
     category = Category.find(params[:id])
-    render json: category, include: :events
+    render json: category, :include => {:events => {
+      :include => :category
+    }}
   end
 
   # # POST /categories
