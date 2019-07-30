@@ -1,41 +1,27 @@
 function displayOrgHomePage(org){
 
-    /*** constants */
-
-    /** other */
     let editOrg = false
 
     displayOrgMainContent(org)
 
     /** edit org profile */
     document.addEventListener('click', function(e){
-        // console.log(e)
         if (e.target.id === 'edit-org-btn') {
             let orgForm = document.querySelector('.container')
-            console.log(orgForm)
             editOrg = !editOrg
-            console.log(editOrg)
             if (editOrg) {
                 orgForm.style.display = 'block'
                 const editOrgForm = document.getElementById('edit-org-form')
                 editOrgForm.addEventListener('submit', function(e){
                     e.preventDefault()
-                    let orgId = e.target[5].dataset.id
-                    fetch(`${ORGS_URL}/${orgId}`, {
-                        method: "PATCH",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            "name": e.target.name.value, 
-                            "email": e.target.email.value, 
-                            "description": e.target.description.value
-                        })
-                    })
-                    .then(res => res.json())
+                    let orgId = e.target[3].dataset.id
+                    let body = {
+                        "name": e.target.name.value, 
+                        "email": e.target.email.value, 
+                        "description": e.target.description.value
+                    }
+                    orgAdapter.patch(orgId, body)
                     .then(data => {
-                        // console.log(data)
                         displayOrgHomePage(data)
                     })
                 }) 
@@ -46,9 +32,7 @@ function displayOrgHomePage(org){
         /** delete organisation */
         else if (e.target.id === 'del-org') {
             let orgId = e.target.dataset.id
-            fetch(`${ORGS_URL}/${orgId}`, {
-                method: "DELETE"
-            })
+            orgAdapter.delete(orgId)
             .then(() => {
                 displayLogin(),
                 localStorage.clear()

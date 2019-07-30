@@ -4,21 +4,33 @@ function displayStudentHomePage(student){
     let mainContainer = document.querySelector('main')
 
     mainContainer.innerHTML = `
-    
     <div class="nav student">
-        <h2>Home page that does nothing rn</h2>
-        <input type="text" placeholder="Search...">
+        <h2>Home page?</h2>
+        <input type="text" placeholder="Search..." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <button id="filter">Filter</button>
+        <div id="filter-container" style="display:none">
+            <form id="filter-bar">
+                <select id="filter-category">Category</select>
+                <select id="filter-day">Day</select>
+            </form>
+        </div>
+
+
         <div class="dropdown">
             <button class="dropbtn" onclick="clickMenu()">
-            <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2> 
-            <i class="fa fa-caret-down"></i>
+            <div class="user-wrapper">
+                <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2> 
+                <i class="fa fa-caret-down"></i>
+            </div>
             </button>
-            <div class="dropdown-content">
+
+            <div id="dropdown-content" class="dropdown-content">
                 <p id="profile">View profile</p><br>
                 <p id="logout">Logout</p><br>
 
-                <button id="edit-student-btn">Edit profile</button>
-                <div class="container" style="display:none">
+                <p id="edit-student-btn">Edit profile</p>
+                <div class="edit-student-container" style="display:none">
                     <form id="edit-student-form">
                         First name: 
                         <input type="text" name="firstname" value="${student.first_name}"><br>
@@ -39,28 +51,42 @@ function displayStudentHomePage(student){
                     </form>
                     <button id="del-student" data-id=${student.id}>Delete account</button>
                 </div>
-            </div>
-        </div>
 
-    
+            </div>
+
+        </div>
 
     </div>
 
+    <div class="main">
+        <div id='calendar'></div>
 
-    <div id='calendar'></div>
+        <h1>My tickets</h1>
+        <div id="my-tickets"></div>
 
-    <h1>My tickets</h1>
-    <div id="my-tickets"></div>
-
-    <h1>All events</h1>
-    <div id="events"></div>
-    
-    <h3>Expired events</h3>
-    <p>Presumably all expired events will be displayed here.</p>
+        <h1>Browse all events</h1>
+        <div id="events"></div>
+        
+        <h3>Expired events</h3>
+        <p>Presumably all expired events will be displayed here.</p>
+    </div>
     `
 
+    let filterDisplay = false
+    document.getElementById('filter').addEventListener('click', (e) => {
+        filterDisplay = !filterDisplay
+        const filterContainer = document.getElementById('filter-container')
+        console.log(filterContainer)
+        if (filterDisplay) {
+            filterContainer.style.display = 'block'
+            let categories = eventAdapter.getAll().then(events => {
+                events.map(event => event.category)
+            })
+        } else {
+            filterContainer.style.display = 'none'
+        }
 
-    
+    })
 
     /** calendar */
     // showCalendar(student)
@@ -76,13 +102,8 @@ function displayStudentHomePage(student){
     calendar.render()
 
     /** All student functionalities */
-    /** edit profile */
     editStudentProfile(student)
-    
-    /** delete student */
     deleteStudent()
-
-    /** logout */
     logout()
     
     
@@ -90,55 +111,10 @@ function displayStudentHomePage(student){
     let studentId = student.id
     displayAllEvents(studentId)
 
-    
-
-    
-    /** all the ticket functionalities */
-    const myTickets = document.getElementById('my-tickets')
-
-    /** sign up for events => creating a ticket */
-    const eventBlock = document.getElementById('events')
-    eventBlock.addEventListener('click', function(e){
-        if (e.target.classList.contains('sign-up-event')){
-            const eventId = e.target.dataset.id
-            const studentId = localStorage.getItem('user_id')
-            /** creating a ticket once clicked sign up button */
-            fetch(TICKETS_URL, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    student_id: studentId,
-                    event_id: eventId
-                })
-            })
-            .then(res => res.json())
-            .then(ticket => {
-                console.log(`added event: ` + `${ticket.event.title}`)
-                displayTicket(ticket)
-                // myTickets.innerHTML += `
-                // <div class="my-event">
-                //     <h3>${ticket.event.title}</h3>
-                //     <button class="del-ticket" data-id=${ticket.id}>Remove</button>
-                //     <p>${ticket.event.location}</p>
-                //     <p>${ticket.event.date}</p>
-                // </div>`
-                let eventDiv = document.querySelector('div#events')
-                eventDiv.innerHTML = ''
-                displayAllEvents(student.id)
-                calendar.addEvent(ticket.event)
-            })
-        }
-    })
-
-    /** display student's events */
+    /** tickets */
+    createTicket(student)
     displayAllTickets(student)
-    
-    /** remove ticket */
     removeTicket(student.id, calendar)
-    
 }
 
 /** CRUD functions for students */
@@ -147,7 +123,7 @@ function editStudentProfile(student) {
     document.getElementById('select-year').value = `${student.year}`
     const editStudentBtn = document.getElementById('edit-student-btn')
     editStudentBtn.addEventListener('click', function(e){
-        let studentForm = document.querySelector('.container')
+        let studentForm = document.getElementById('edit-student-container')
         editStudent = !editStudent
         if (editStudent) {
             studentForm.style.display = 'block'
@@ -155,21 +131,14 @@ function editStudentProfile(student) {
             editStudentForm.addEventListener('submit', function(e){
                 e.preventDefault()
                 let studentId = e.target[5].dataset.id
-                fetch(`${STUDENTS_URL}/${studentId}`, {
-                    method: "PATCH",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "first_name": e.target.firstname.value, 
-                        "last_name": e.target.lastname.value,
-                        "email": e.target.email.value, 
-                        "year": e.target.year.value, 
-                        "major": e.target.major.value
-                    })
-                })
-                .then(res => res.json())
+                let body = {
+                    "first_name": e.target.firstname.value, 
+                    "last_name": e.target.lastname.value,
+                    "email": e.target.email.value, 
+                    "year": e.target.year.value, 
+                    "major": e.target.major.value
+                }
+                studentAdapter.patch(studentId, body)
                 .then(student => {
                     console.log('edited student')
                     displayStudentHomePage(student)
@@ -186,9 +155,7 @@ function deleteStudent() {
     deleteStudentBtn.addEventListener('click', function(e){
         e.preventDefault()
         let studentId = e.target.dataset.id
-        fetch(`${STUDENTS_URL}/${studentId}`, {
-            method: "DELETE"
-        })
+        studentAdapter.delete(studentId)
         .then(() => {
             displayLogin()
             localStorage.clear()
@@ -199,3 +166,20 @@ function deleteStudent() {
 function clickMenu() {
     document.getElementById("dropdown-content").classList.toggle("show")
 }
+
+// window.onclick = function(e) {
+//     if (!e.target.matches('.dropbtn')) {
+//     let myDropdown = document.getElementById("dropdown-content");
+//     if (myDropdown.classList.contains('show')) {
+//         myDropdown.classList.remove('show');
+//         }
+//     }
+// }
+
+window.scroll(function() {
+    if ($(window).scrollTop() > 10) {
+        $('#navBar').addClass('floatingNav');
+    } else {
+        $('#navBar').removeClass('floatingNav');
+    }
+});

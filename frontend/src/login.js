@@ -3,18 +3,12 @@ function studentLogin(){
     studentLogin.addEventListener('submit', function(e){
         e.preventDefault()
         const email = e.target[0].value
-        fetch(`${BASE_URL}/students/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                email
-            })
-        })
-        .then(res => res.json())
+        
+        let body = { email }
+        baseAdapter.studentLogin(body)
         .then(data => {
             if (data.error) {
+                console.log(data.error)
                 alert(data.error)
             } else {
                 localStorage.setItem("user_id", data.id)
@@ -34,16 +28,8 @@ function orgLogin(){
     orgLogin.addEventListener('submit', function(e){
         e.preventDefault()
         const email = e.target[0].value
-        fetch(`${BASE_URL}/orgs/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                email
-            })
-        })
-        .then(res => res.json())
+        let body = { email }
+        baseAdapter.orgLogin(body)
         .then(data => {
             if (data.error) {
                 alert(data.error)

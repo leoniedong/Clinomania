@@ -1,8 +1,8 @@
 function allOrgEvents(orgId) {
     mainContainer.innerHTML += `
     <h1>Events</h1><div id="event-list"></div>`
-    fetch(`${ORGS_URL}/${orgId}`)
-    .then(res => res.json())
+
+    orgAdapter.get(orgId)
     .then(org => {
         org.events.forEach(event => {
             displayEvent(event)
@@ -21,15 +21,24 @@ function createEvent(org) {
         Dress Code: <input type="text" name="dresscode"><br>
         Speakers: <input type="text" name="speakers"><br>
         Contact Email: <input type="email" name="email"><br>
-        Category: <input type="text" name="category"><br>
+        Category:
+        <select name="category" id="select-category">
+        </select><br>
         Tags: <input type="text" name="tags"><br>
         <input type="submit" value="Create new event" data-id=${org.id}>
     </form>`
 
+    const selectCategoryList = document.getElementById('select-category')
+    categoryAdapter.getAll().then(categories => {
+        categories.forEach(category => {
+            selectCategoryList.innerHTML += `<option value=${category.id}>${category.name}</option>`
+        })
+    })
+
     const eventForm = document.getElementById('create-event')
     eventForm.addEventListener('submit', function(e){
         e.preventDefault()
-        const body = JSON.stringify({
+        const body = {
             "title": e.target.title.value,
             "location": e.target.location.value,
             "start": e.target.start.value,
@@ -37,26 +46,18 @@ function createEvent(org) {
             "dress_code": e.target.dresscode.value,
             "speakers": e.target.speakers.value,
             "contact_email": e.target.email.value,
-            "category": e.target.category.value,
+            "category_id": e.target.category.value,
             "tags": e.target.tags.value,
             "organisation_id": localStorage.getItem('user_id')
-        })
-        fetch(EVENTS_URL, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: body
-        })
-        .then(res => res.json())
+        }
+
+        eventAdapter.post(body)
         .then(event => {
             displayEvent(event)
         })
         e.target.reset()
     })
 }
-
 
 function editOrDeleteEvent() {
     /** edit events */
@@ -66,9 +67,7 @@ function editOrDeleteEvent() {
         
         if (e.target.classList.contains('edit-event')) {
             const currentEventBox = e.target.parentElement.parentElement
-            fetch(`${EVENTS_URL}/${eventId}`)
-            .then(res => res.json())
-            .then(event => {
+            eventAdapter.get(eventId).then(event => {
                 currentEventBox.innerHTML = `
                 <form class="edit-event-info">
                     <h3>Title: <input type="text" name="title" value="${event.title}"></h3>
@@ -86,25 +85,18 @@ function editOrDeleteEvent() {
                 const editEventForm = document.querySelector('.edit-event-info')
                 editEventForm.addEventListener('submit', function(e){
                     e.preventDefault()
-                    fetch(`${EVENTS_URL}/${eventId}`, {
-                        method: "PATCH",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            "title": e.target.title.value,
-                            "location": e.target.location.value,
-                            "start": e.target.start.value,
-                            "end": e.target.end.value,                            
-                            "dress_code": e.target.dresscode.value,
-                            "speakers": e.target.speakers.value,
-                            "contact_email": e.target.contactemail.value,
-                            "category": e.target.category.value,
-                            "tags": e.target.tags.value
-                        })
-                    })
-                    .then(res => res.json())
+                    const body = {
+                        "title": e.target.title.value,
+                        "location": e.target.location.value,
+                        "start": e.target.start.value,
+                        "end": e.target.end.value,                            
+                        "dress_code": e.target.dresscode.value,
+                        "speakers": e.target.speakers.value,
+                        "contact_email": e.target.contactemail.value,
+                        "category": e.target.category.value,
+                        "tags": e.target.tags.value
+                    }
+                    eventAdapter.patch(eventId, body)
                     .then(event => {
                         currentEventBox.innerHTML = `
                             <div class="event-title-container">
@@ -131,15 +123,8 @@ function editOrDeleteEvent() {
         /** delete events */
         else if (e.target.classList.contains('del-event')) {
             const orgId = localStorage.getItem('user_id')
-            fetch(`${EVENTS_URL}/${eventId}`, {
-                method: "DELETE"
-            })
-
-            fetch(`${ORGS_URL}/${orgId}`)
-            .then(res => res.json())
-            .then(org => {
-                displayOrgHomePage(org)
-            })
+            eventAdapter.delete(eventId)
+            orgAdapter.get(orgId).then(org => { displayOrgHomePage(org) })
         }
     })
 }

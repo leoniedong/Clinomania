@@ -8,8 +8,9 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.string :dress_code
       t.string :speakers
       t.string :contact_email
-      t.string :category
+      t.integer :category_id
       t.string :tags
+      t.string :notes
       t.references :organisation, foreign_key: true
 
       t.timestamps

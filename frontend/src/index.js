@@ -4,14 +4,26 @@ const STUDENTS_URL = `${BASE_URL}/students`
 const ORGS_URL = `${BASE_URL}/organisations`
 const EVENTS_URL = `${BASE_URL}/events`
 const TICKETS_URL = `${BASE_URL}/tickets`
+const CATEGORIES_URL = `${BASE_URL}/categories`
 
-/*** constants */
+
 const mainContainer = document.querySelector('main')
 
-/** document */
+/***** Adapters *****/
+const baseAdapter = new Adapter(BASE_URL)
+const studentAdapter = new Adapter(STUDENTS_URL)
+const orgAdapter = new Adapter(ORGS_URL)
+const eventAdapter = new Adapter(EVENTS_URL)
+const ticketAdapter = new Adapter(TICKETS_URL)
+const categoryAdapter = new Adapter(CATEGORIES_URL)
+
+
+/***** document *****/
 document.addEventListener('DOMContentLoaded', function(){
+
     /***** constants *****/
     const myTickets = document.getElementById('my-tickets')
+    const mainContainer = document.querySelector('main')
     
     console.log('Content loaded')
     console.log(localStorage)
@@ -25,8 +37,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         /** display student */
         if (userType === 'student'){
-            fetch(`${STUDENTS_URL}/${userId}`)
-            .then(res => res.json())
+            studentAdapter.get(userId)
             .then(user => {
                 displayStudentHomePage(user)
             })
@@ -35,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function(){
         /** display oragnisation */
         else if (userType === 'organisation') {
             console.log('user is logged in')
-            fetch(`${ORGS_URL}/${userId}`)
-            .then(res => res.json())
+            orgAdapter.get(userId)
             .then(user => {
                 displayOrgHomePage(user)
             })
