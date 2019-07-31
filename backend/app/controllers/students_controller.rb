@@ -6,7 +6,7 @@ class StudentsController < ApplicationController
   def login
     student = Student.find_by(email:params[:email])
     if student
-      render json: student, :include => {:tickets => {:include => :event}}
+      render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
     else
       render json: {error: "LOG IN UNSUCCESSFUL", status: 401}
     end
@@ -16,19 +16,19 @@ class StudentsController < ApplicationController
 
   def index
     students = Student.all
-    render json: students, :include => {:tickets => {:include => :event}}
+    render json: students, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
   end
 
   def show
     student = Student.find(params[:id])
-    render json: student, :include => {:tickets => {:include => :event}}
+    render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
   end
 
   def create
     student = Student.new(student_params)
 
     if student.save
-      render json: student, :include => {:tickets => {:include => :event}}
+      render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
     else
       render json: {"error": student.errors.full_messages}, status: 406
     end
@@ -37,7 +37,7 @@ class StudentsController < ApplicationController
   def update
     student = Student.find(params[:id])
     if student.update(student_params)
-      render json: student, :include => {:tickets => {:include => :event}}
+      render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
     else
       render json: {"error": student.errors.full_messages}, status: :unprocessable_entity
     end

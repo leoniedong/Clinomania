@@ -22,7 +22,7 @@ function showEvent(event, studentId){
                 <p>Dress code: ${event.dress_code}</p>
                 <p>Speakers: ${event.speakers}</p>
                 <p>Contact: ${event.contact_email}</p>
-                <p>Category: ${event.category.name}</p>
+                <p>Category: ${event.category_name}</p>
                 <p>Tags: ${event.tags}</p>
                 <p>Notes: ${event.notes}</p>
             </div>
@@ -77,7 +77,7 @@ function eventInfoContent(element, event) {
         <p>Dress code: ${event.dress_code}</p>
         <p>Speakers: ${event.speakers}</p>
         <p>Contact: ${event.contact_email}</p>
-        <p>Category: ${event.category.name}</p>
+        <p>Category: ${event.category_name}</p>
         <p>Tags: ${event.tags}</p>
         <p>Notes: ${event.notes}</p>
     </div>`

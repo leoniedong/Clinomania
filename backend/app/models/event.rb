@@ -5,4 +5,8 @@ class Event < ApplicationRecord
   has_many :students, through: :tickets
 
   validates :organisation_id, presence: true
+
+  def category_name
+    self.category.name
+  end
 end

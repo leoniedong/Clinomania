@@ -4,13 +4,13 @@ class TicketsController < ApplicationController
   # GET /tickets
   def index
     tickets = Ticket.all
-    render json: tickets.to_json(include: [:event, :student])
+    render json: tickets.to_json(include: [:event, :student], except: [:created_at, :updated_at])
   end
 
   # GET /tickets/1
   def show
     ticket = Ticket.find(params[:id])
-    render json: ticket, include: [:event, :student]
+    render json: ticket, include: [:event, :student], except: [:created_at, :updated_at]
   end
 
   # POST /tickets
@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.new(ticket_params)
 
     if ticket.save
-      render json: ticket, include: [:event, :student]
+      render json: ticket, include: [:event, :student], except: [:created_at, :updated_at]
     else
       render json: ticket.errors
     end
@@ -28,7 +28,7 @@ class TicketsController < ApplicationController
   def update
     ticket = Ticket.find(params[:id])
     if ticket.update(ticket_params)
-      render json: ticket, include: [:event, :student]
+      render json: ticket, include: [:event, :student], except: [:created_at, :updated_at]
     else
       render json: ticket.errors
     end

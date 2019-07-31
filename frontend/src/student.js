@@ -1,114 +1,163 @@
 let calendar;
 
 function displayStudentHomePage(student){    
-    let mainContainer = document.querySelector('main')
+    const mainContainer = document.querySelector('main')
 
+    /***** navbar (search, user menu), two-column layour content */
     mainContainer.innerHTML = `
     <div class="nav student">
         <h2>Home page?</h2>
-        <input type="text" placeholder="Search..." name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <button id="filter">Filter</button>
-        <div id="filter-container" style="display:none">
-            <form id="filter-bar">
-                <select id="filter-category">Category
-                    <option disabled selected>-- By category --</option>
-                </select>
-                <select id="filter-day">Day
-                    <option disabled selected>-- By day --</option>
-                </select>
-                <input type="submit" value="apply">
-            </form>
-        </div>
+        <form id="search-bar">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        
+        
+        <div class="user-menu" id="user-menu">
+            <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student) <i class="fa fa-caret-right" aria-hidden="true"></i></h2>
+            <div id="user-option" class="user-option">
+                <h2 id="profile"><i class="fa fa-user-circle-o" id="view-profile" aria-hidden="true"></i></h2>
+                <div id="profile-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Welcome, ${capitalise(student.first_name)} ${capitalise(student.last_name)}</h2>
+                        <p>EMAIL: ${student.email}</p>
+                        <p>YEAR: ${student.year}</p>
+                        <p>MAJOR: ${student.major}</p>
+                        <button id="edit-student-button" data-id=${student.id}>Edit profile</button>
+                        <button id="del-student">Delete account</button>
 
 
-        <div class="dropdown">
-            <button class="dropbtn" onclick="clickMenu()">
-            <div class="user-wrapper">
-                <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2> 
-                <i class="fa fa-caret-down"></i>
-            </div>
-            </button>
+                        <div id="edit-student-container" style="display:none">
+                            <form id="edit-student-form">
+                            <div class="block">
+                                First name: <input type="text" name="firstname" value="${student.first_name}"><br></div>
+                                Last name: <input type="text" name="lastname" value="${student.last_name}"><br>
+                                Email: 
+                                <input type="email" name="email" value="${student.email}"><br>
+                                Year: 
+                                <select name="year" id="select-year">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select><br>
+                                Major:
+                                <input type="text" name="major" value="${student.major}"><br>
+                                <input type="submit" value="done" data-id=${student.id}>
+                            </form>
+                        </div>
 
-            <div id="dropdown-content" class="dropdown-content">
-                <p id="profile">View profile</p><br>
-                <p id="logout">Logout</p><br>
+                    </div>
 
-                <p id="edit-student-btn">Edit profile</p>
-                <div class="edit-student-container" style="display:none">
-                    <form id="edit-student-form">
-                        First name: 
-                        <input type="text" name="firstname" value="${student.first_name}"><br>
-                        Last name: 
-                        <input type="text" name="lastname" value="${student.last_name}"><br>
-                        Email: 
-                        <input type="email" name="email" value="${student.email}"><br>
-                        Year: 
-                        <select name="year" id="select-year">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select><br>
-                        Major:
-                        <input type="text" name="major" value="${student.major}"><br>
-                        <input type="submit" value="done" data-id=${student.id}>
-                    </form>
-                    <button id="del-student" data-id=${student.id}>Delete account</button>
                 </div>
 
+                <h2 id="logout"><i class="fa fa-sign-out" id="logout" aria-hidden="true"></i></h2>
             </div>
-
         </div>
 
     </div>
 
     <div class="main">
-        <div id='calendar'></div>
+    
+        <div class="first-column">
+            <h1>Browse all events</h1>
+            <button id="filter">Filter</button>
+            <div id="filter-container" style="display:none">
+                <form id="filter-bar">
+                    <select id="filter-category">Category
+                        <option disabled selected>-- By category --</option>
+                    </select>
+                    <select id="filter-day">Day
+                        <option disabled selected>-- By day --</option>
+                    </select>
+                    <input type="submit" value="apply">
+                </form>
+            </div>
+            <div id="events"></div>
+            
+            <h3>Expired events</h3>
+            <p>Presumably all expired events will be displayed here.</p>
+        </div>
 
-        <h1>My tickets</h1>
-        <div id="my-tickets"></div>
+        <div class="second-column">
+            <h1>My calendar</h1>
+            <div id='calendar'></div>
 
-        <h1>Browse all events</h1>
-        <div id="events"></div>
-        
-        <h3>Expired events</h3>
-        <p>Presumably all expired events will be displayed here.</p>
+            <h1>My tickets</h1>
+            <div id="my-tickets"></div>
+        </div>
+
     </div>
     `
 
-    const filterCategoryList = document.getElementById('filter-category')
-    categoryAdapter.getAll().then(categories => {
-        categories.forEach(category => {
-            filterCategoryList.innerHTML += `<option value=${category.id}>${category.name}</option>`
-        })
-    })
+    
+    /***** profile modal *****/
+    let modal = document.getElementById("profile-modal");
+    let btn = document.getElementById("profile");
+    let span = document.getElementsByClassName("close")[0];
 
-    let filterDisplay = false
-    document.getElementById('filter').addEventListener('click', (e) => {
-        filterDisplay = !filterDisplay
-        const filterContainer = document.getElementById('filter-container')
-        if (filterDisplay) {
-            filterContainer.style.display = 'block'
-            const filterBar = document.getElementById('filter-bar')
-            filterBar.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const selectedCategoryId = e.target[0].value
-                categoryAdapter.get(selectedCategoryId).then(cat => {
-                    console.log(cat)
-                    const eventDiv = document.querySelector('div#events')
-                    eventDiv.innerHTML = ''
-                    cat.events.forEach(event => {
-                        debugger
-                        showEvent(event, student.id)
-                    })
-                })
-            })
-        } else {
-            filterContainer.style.display = 'none'
+    /** open modal */
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    /** close modal by clicking x */
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    /** close modal by clicking window */
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
+    }
+    
+    
+    /*** navbar scrolling function that uses weird syntax and doesn't seem to work */
+    // window.scroll(function() {
+    //     if ($(window).scrollTop() > 10) {
+    //         $('#navBar').addClass('floatingNav');
+    //     } else {
+    //         $('#navBar').removeClass('floatingNav');
+    //     }
+    // });
+
+
+    /***** filter and search bar *****/
+    filterCategory(student.id)
+
+    document.getElementById('search-bar').addEventListener('submit', (e) => {
+        e.preventDefault()
+        const searchWordArr = e.target[0].value.toLowerCase().trim().match(/\w+/g)
+        console.log(searchWordArr)
+        eventAdapter.getAll().then(events => {
+            let results = []
+            for (let i=0; i < searchWordArr.length; i++) {
+                let searchWord = searchWordArr[i]
+                events.forEach(event => {
+                    if (Object.values(event).join().toLowerCase().includes(searchWord) && !results.includes(event)) {
+                        results.push(event)
+                    }
+                })
+            }
+            // console.log(results)
+            const eventDiv = document.querySelector('div#events')
+            eventDiv.innerHTML = ''
+            results.forEach(event => {
+                showEvent(event, student.id)
+            })
+        })
 
     })
+
+
+
+
+
+
+
 
     /** calendar */
     // showCalendar(student)
@@ -143,7 +192,7 @@ function displayStudentHomePage(student){
 function editStudentProfile(student) {
     let editStudent = false
     document.getElementById('select-year').value = `${student.year}`
-    const editStudentBtn = document.getElementById('edit-student-btn')
+    const editStudentBtn = document.getElementById('edit-student-button')
     editStudentBtn.addEventListener('click', function(e){
         let studentForm = document.getElementById('edit-student-container')
         editStudent = !editStudent
@@ -185,23 +234,3 @@ function deleteStudent() {
     })
 }
 
-function clickMenu() {
-    document.getElementById("dropdown-content").classList.toggle("show")
-}
-
-// window.onclick = function(e) {
-//     if (!e.target.matches('.dropbtn')) {
-//     let myDropdown = document.getElementById("dropdown-content");
-//     if (myDropdown.classList.contains('show')) {
-//         myDropdown.classList.remove('show');
-//         }
-//     }
-// }
-
-window.scroll(function() {
-    if ($(window).scrollTop() > 10) {
-        $('#navBar').addClass('floatingNav');
-    } else {
-        $('#navBar').removeClass('floatingNav');
-    }
-});

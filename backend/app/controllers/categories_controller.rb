@@ -3,15 +3,14 @@ class CategoriesController < ApplicationController
 
   def index
     categories = Category.all
-    render json: categories.to_json(:include => {:events => {
-      :include => :category
+    render json: categories.to_json(except: [:created_at, :updated_at], :include => {:events => {except: [:created_at, :updated_at], methods: :category_name
     }})
   end
 
   def show
     category = Category.find(params[:id])
-    render json: category, :include => {:events => {
-      :include => :category
+    render json: category, except: [:created_at, :updated_at], :include => {:events => {
+      :include => :category, except: [:created_at, :updated_at]
     }}
   end
 

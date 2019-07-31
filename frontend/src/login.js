@@ -47,7 +47,7 @@ function orgLogin(){
 }
 
 function logout(){
-    mainContainer.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
         if (e.target.id === 'logout') {
             localStorage.clear()
             displayLogin()

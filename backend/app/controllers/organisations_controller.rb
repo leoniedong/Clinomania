@@ -15,18 +15,18 @@ class OrganisationsController < ApplicationController
 
   def index
     organisations = Organisation.all
-    render json: organisations, include: [:events]
+    render json: organisations, include: [:events], except: [:created_at, :updated_at]
   end
 
   def show
     organisation = Organisation.find(params[:id])
-    render json: organisation, include: [:events]
+    render json: organisation, include: [:events], except: [:created_at, :updated_at]
   end
 
   def create
     organisation = Organisation.new(organisation_params)
     if organisation.save
-      render json: organisation, include: [:events]
+      render json: organisation, include: [:events], except: [:created_at, :updated_at]
     else
       byebug
       render json: {"error": organisation.errors.full_messages}
@@ -36,7 +36,7 @@ class OrganisationsController < ApplicationController
   def update
     organisation = Organisation.find(params[:id])
     if organisation.update(organisation_params)
-      render json: organisation, include: [:events]
+      render json: organisation, include: [:events], except: [:created_at, :updated_at]
     else
       render json: {"error": organisation.errors.full_messages}
     end

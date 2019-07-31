@@ -11,20 +11,26 @@ body {
 }
 
 p {
-    font-family: Helvetica, Arial, sans-serif
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
 }
 
 html {
     height: 100%;
 }
 
-h2 {
-    padding: none;
+/** column layout **/
+.first-column {
+    width: 60%;
+    padding: 0 10px 0 0;
+    float: left;
 }
 
-/* .fa {
-    display: inline-block;
-} */
+.second-column {
+    width: 40%;
+    padding: 0 10px 0 0;
+    float: right;
+}
 
 .event-box i {
     display:inline-block;
@@ -35,12 +41,19 @@ selected option:disabled {
     color: gray
 }
 
+.my-event {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: grey;
+    padding: 10px;
+    /* padding-bottom: 10px; */
+}
 
 /*** event cards ***/
 .event-box {
-    border: grey solid 1px;
+    border: darkgray solid 1px;
     padding: 1rem;
-    width: 370px;
+    width: 340px;
     height: 25rem;
     display: inline-grid;
     margin: 1rem;
@@ -57,6 +70,9 @@ selected option:disabled {
     display: inline-block;
 }
 
+
+/** icons **/
+
 i {
     /* float: right; */
     display: inline-block;
@@ -66,26 +82,61 @@ i:hover {
     color: #47B2D3;
 }
 
-
-/*** Modals (not done) */
-/* .modal{
-    position:fixed;
-    z-index:1;
-    left:0;
-    top:0;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color:rgba(0,0,0,0.5);
+.block {
+    display: inline-flex;
 }
 
-.modal-content{
-    background-color:lightgray;
-    margin:20% auto;
+.block input[type=text], .block input[type=email], .block select {
+    background:whitesmoke;
+    border: none;
+    /* padding: 10px 15px; */
+    /* margin: 8px 0; */
+    /* width: 100%; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+}
+
+
+/***** Modals *****/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
     padding: 20px;
-    width: 70%;
-    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17)
-} */
+    border: 1px solid #888;
+    width: 30em;
+    text-align: left;
+    display: inline-grid;
+}
+
+.close {
+    color: #888;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    /* color: rgb(161, 155, 155); */
+    color: #47B2D3;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 /*** overlay transition ***/
 * {
@@ -136,7 +187,6 @@ a {
     text-align: center;
 }
 
-
 .form-container input[type=text], .form-container input[type=email], .form-container select {
     background:whitesmoke;
     border: none;
@@ -147,6 +197,24 @@ a {
     -moz-appearance: none;
     appearance: none;
 }
+
+#edit-student-form {
+    display: inline-grid;
+    /* float: left; */
+    text-align: left;
+}
+
+/* input[type=text], input[type=email], select {
+    background:whitesmoke;
+    border: none;
+    display: inline-block;
+    /* padding: 10px 15px; */
+    /* margin: 8px 0; */
+    /* width: 100%; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+} */
 
 .button {
     border-radius: 20px;
@@ -278,22 +346,10 @@ a {
 
 
 /* navigation bar */
-.user-wrapper h2, .user-wrapper i{
-    display: inline-block;
-    padding: none;
-}
 
 .nav {
     overflow: hidden;
     box-shadow:0 0 10px 3px rgba(0,0,0,.1);
-}
-
-.nav .student{
-    /* background-color: lightblue; */
-}
-
-.nav .org {
-    /* background-color: #47B2D3 */
 }
 
 .nav h2, .nav input {
@@ -303,38 +359,18 @@ a {
     padding: 10px;
     text-decoration: none;
     margin: 10px;
+    /* font-size: 16px; */
 }
 
-.dropdown {
+.user-menu {
     float: right;
     overflow: hidden;
     display: inline-block;
+    text-align: center;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2;
-}
-
-.dropdown-content p {
-    color: black;
-}
-
-.dropdown .dropbtn {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-}
-
-.dropdown p:hover, .dropdown:hover .dropbtn {
-    background-color: #71A9D8;
+.user-option {
+    display: inline-block;
 }
 
 .show {

@@ -3,18 +3,18 @@ class EventsController < ApplicationController
 
   def index
     events = Event.all
-    render json: events.to_json(include: [:organisation, :students, :category])
+    render json: events.to_json(include: [:organisation, :students, :category], except: [:created_at, :updated_at], methods: :category_name)
   end
 
   def show
     event = Event.find(params[:id])
-    render json: event, include: [:organisation, :students, :category]
+    render json: event, include: [:organisation, :students, :category], except: [:created_at, :updated_at]
   end
 
   def create
     event = Event.new(event_params)
     if event.save
-      render json: event, include: [:organisation, :students, :category]
+      render json: event, include: [:organisation, :students, :category], except: [:created_at, :updated_at]
     else
       # byebug
       render json: { error: event.errors.full_messages }
@@ -24,7 +24,7 @@ class EventsController < ApplicationController
   def update
     event = Event.find(params[:id])
     if event.update(event_params)
-      render json: event, include: [:organisation, :students, :category]
+      render json: event, include: [:organisation, :students, :category], except: [:created_at, :updated_at]
     else
       # byebug
       render json: { error: event.errors.full_messages }
