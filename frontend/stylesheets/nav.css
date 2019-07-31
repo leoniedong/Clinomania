@@ -1,0 +1,29 @@
+.nav {
+    overflow: hidden;
+    box-shadow:0 0 10px 3px rgba(0,0,0,.1);
+}
+
+.nav h2, .nav input {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    margin: 10px;
+    /* font-size: 16px; */
+}
+
+.user-menu {
+    float: right;
+    overflow: hidden;
+    display: inline-block;
+    text-align: center;
+}
+
+.user-option {
+    display: inline-block;
+}
+
+.show {
+    display: block;
+}  

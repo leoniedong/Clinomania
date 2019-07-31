@@ -1,0 +1,32 @@
+.event-box i {
+    display:inline-block;
+}
+
+.my-event {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: grey;
+    padding: 10px;
+    /* padding-bottom: 10px; */
+}
+
+/*** event cards ***/
+.event-box {
+    border: darkgray solid 1px;
+    padding: 1rem;
+    width: 340px;
+    height: 25rem;
+    display: inline-grid;
+    margin: 1rem;
+    /* box-shadow: 3px 4px #e04b52 */
+    border-radius: 10px;
+}
+
+.event-title-container {
+    padding: 0px;
+    height: 0px;
+}
+
+.event-title-container h3 {
+    display: inline-block;
+}

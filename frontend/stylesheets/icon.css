@@ -1,0 +1,23 @@
+i {
+    /* float: right; */
+    display: inline-block;
+}
+
+i:hover {
+    color: #47B2D3;
+}
+
+.block {
+    display: inline-flex;
+}
+
+.block input[type=text], .block input[type=email], .block select {
+    background:whitesmoke;
+    border: none;
+    /* padding: 10px 15px; */
+    /* margin: 8px 0; */
+    /* width: 100%; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+}
