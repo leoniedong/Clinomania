@@ -17,3 +17,19 @@ Ticket.create(event_id: 2, student_id: 1)
 ["Charity", "Community and culture", "Education", "Film, Media and Entertainment", "Health and Wellbeing", "Networking and Company Presentations", "Other", "Public Lecture", "Science and Technology"].each do |category|
     Category.create({:name => category})
 end
+
+20.times do
+    Student.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, year: rand(1..4), major: Faker::Educator.degree, password: "password", password_confirmation:"password")
+end
+
+5.times do
+    Organisation.create(name: Faker::Company.name, description: Faker::Company.bs, email: Faker::TvShows::TheITCrowd.email, password: "password", password_confirmation:"password")
+end
+
+30.times do 
+    Event.create(title: Faker::Space.meteorite, location: Faker::Address.full_address, start: Faker::Time.forward(days: 7), end: Faker::Time.forward(days: 7), dress_code: "N/A", speakers: Faker::Name.name, contact_email: Faker::TvShows::TheITCrowd.email, category_id: rand(1..18), tags: "N/A", organisation_id: rand(1..7), notes: Faker::Quotes::Shakespeare.romeo_and_juliet_quote)
+end
+
+[2..15].each do |num|
+    Ticket.create(event_id: 1, student_id: num)
+end
