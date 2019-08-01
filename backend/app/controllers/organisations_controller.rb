@@ -5,7 +5,8 @@ class OrganisationsController < ApplicationController
 
   def login
     org = Organisation.find_by(email:params[:email])
-    if org
+    byebug
+    if org && org.authenticate(params[:password])
       render json: org
     else
       render json: {error: "LOG IN UNSUCCESSFUL", status: 401}
@@ -25,10 +26,11 @@ class OrganisationsController < ApplicationController
 
   def create
     organisation = Organisation.new(organisation_params)
+    byebug
     if organisation.save
       render json: organisation, include: [:events], except: [:created_at, :updated_at]
     else
-      byebug
+      # byebug
       render json: {"error": organisation.errors.full_messages}
     end
   end
@@ -51,7 +53,7 @@ class OrganisationsController < ApplicationController
   private
 
   def organisation_params
-    params.require(:organisation).permit(:email, :name, :description)
+    params.permit(:email, :name, :description, :password, :password_confirmation)
   end
 
 

@@ -1,11 +1,11 @@
 class StudentsController < ApplicationController
   # before_action :set_student, only: [:show, :update, :destroy]
-  # has_secure_password
 
 
   def login
     student = Student.find_by(email:params[:email])
-    if student
+    byebug
+    if student && student.authenticate(params[:password])
       render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
     else
       render json: {error: "LOG IN UNSUCCESSFUL", status: 401}
@@ -51,7 +51,7 @@ class StudentsController < ApplicationController
 
   private
     def student_params
-      params.require(:student).permit(:email, :year, :major, :first_name, :last_name)
+      params.permit(:email, :year, :major, :first_name, :last_name, :password, :password_confirmation)
     end
 
 end

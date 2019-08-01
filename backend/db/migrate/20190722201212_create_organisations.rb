@@ -4,6 +4,7 @@ class CreateOrganisations < ActiveRecord::Migration[5.2]
       t.string :email
       t.string :name
       t.string :description
+      t.string :password_digest
 
       t.timestamps
     end

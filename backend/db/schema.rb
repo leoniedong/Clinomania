@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_150020) do
     t.string "email"
     t.string "name"
     t.string "description"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_150020) do
     t.string "major"
     t.string "first_name"
     t.string "last_name"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
