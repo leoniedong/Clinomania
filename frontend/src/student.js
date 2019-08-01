@@ -59,27 +59,22 @@ function displayStudentHomePage(student){
         <div class="first-column">
             <h1>Browse all events</h1>
 
-            <form id="search-bar">
-                <input type="text" placeholder="Search..." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
+            <button id="show-all">Show all</button>
+            <div id="search-container">
+                <form id="search-bar">
+                    <input type="text" placeholder="Search..." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
 
-            <button id="filter">Filter</button>
-            <div id="filter-container" style="display:none">
                 <form id="filter-bar">
                     <select id="filter-category">Category
-                        <option disabled selected>-- By category --</option>
-                    </select>
-                    <select id="filter-day">Day
-                        <option disabled selected>-- By day --</option>
+                        <option disabled selected>-- Filter by category --</option>
                     </select>
                     <input type="submit" value="apply">
                 </form>
-            </div>
             <div id="events"></div>
             
-            <h3>Expired events</h3>
-            <p>Presumably all expired events will be displayed here.</p>
         </div>
 
         <div class="second-column">
@@ -129,10 +124,11 @@ function displayStudentHomePage(student){
     /***** filter and search bar *****/
     filterCategory(student.id)
 
+    /** search */
     document.getElementById('search-bar').addEventListener('submit', (e) => {
         e.preventDefault()
         const searchWordArr = e.target[0].value.toLowerCase().trim().match(/\w+/g)
-        console.log(searchWordArr)
+        // console.log(searchWordArr)
         eventAdapter.getAll().then(events => {
             let results = []
             for (let i=0; i < searchWordArr.length; i++) {
@@ -143,13 +139,20 @@ function displayStudentHomePage(student){
                     }
                 })
             }
-            // console.log(results)
             const eventDiv = document.querySelector('div#events')
             eventDiv.innerHTML = ''
             results.forEach(event => {
                 showEvent(event, student.id)
             })
         })
+    })
+
+    /** clear search */
+    document.addEventListener('click', (e) => {
+        // console.log(e)
+        if (e.target.id === 'show-all') {
+            displayAllEvents(student.id)
+        }
     })
 
 

@@ -6,8 +6,10 @@ function displayOrgHomePage(org){
 
     /** edit org profile */
     document.addEventListener('click', function(e){
+        console.log(e)
         if (e.target.id === 'edit-org-btn') {
-            let orgForm = document.querySelector('.container')
+            // debugger
+            let orgForm = document.getElementById('edit-org-container')
             editOrg = !editOrg
             if (editOrg) {
                 orgForm.style.display = 'block'
@@ -67,11 +69,11 @@ function displayOrgMainContent(org) {
                         <h2>Welcome, ${capitalise(org.name)}</h2>
                         <p>EMAIL: ${org.email}</p>
                         <p>DESCRIPTION: ${org.description}</p>
-                        <button id="edit-org-button" data-id=${org.id}>Edit profile</button>
+                        <button id="edit-org-btn" data-id=${org.id}>Edit profile</button>
                         <button id="del-org">Delete account</button>
 
                         <div id="edit-org-container" style="display:none">
-                            <form id="edit-student-form">
+                            <form id="edit-org-form">
                                 <div class="block">
                                     Name: <input type="text" name="name" value="${org.name}"><br>
                                     Email: <input type="email" name="email" value="${org.email}"><br>
@@ -110,10 +112,7 @@ function displayOrgMainContent(org) {
             <input type="submit" value="Create new event" data-id=${org.id}>
         </form>
 
-
-    </div>
-    
-    `
+    </div>`
     
     let modal = document.getElementById("profile-modal");
     let btn = document.getElementById("org-profile");

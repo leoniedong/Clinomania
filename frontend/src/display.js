@@ -1,42 +1,46 @@
 function displayAllEvents(studentId) {
+    const eventDiv = document.querySelector('div#events')
+    eventDiv.innerHTML = ''
     eventAdapter.getAll().then(events => {
         events.forEach(event => {
             showEvent(event, studentId)
         })
     })
-    
 }
 
 /** displaying events for students */
+
+/** old function */
 function showEvent(event, studentId){
-        const eventDiv = document.querySelector('div#events')
-        eventDiv.innerHTML += `
-        <div class="event-box">
-            <div class="event-title-container" id="etc-${event.id}">
-                <h3>${event.title}</h3>
-            </div>
-            
-            <div class="event-info">
-                <p>Location: ${event.location}</p>
-                <p>Start date: ${displayDate(event.start)}</p>
-                <p>End date: ${displayDate(event.end)}</p>
-                <p>Dress code: ${event.dress_code}</p>
-                <p>Speakers: ${event.speakers}</p>
-                <p>Contact: ${event.contact_email}</p>
-                <p>Category: ${event.category_name}</p>
-                <p>Tags: ${event.tags}</p>
-                <p>Notes: ${event.notes}</p>
-            </div>
-        </div>`
+    const eventDiv = document.querySelector('div#events')
+    eventDiv.innerHTML += `
+    <div class="event-box">
+        <div class="event-title-container" id="etc-${event.id}">
+            <h3>${event.title}</h3>
+        </div>
+        
+        <div class="event-info">
+            <p>Location: ${event.location}</p>
+            <p>Start date: ${displayDate(event.start)}</p>
+            <p>End date: ${displayDate(event.end)}</p>
+            <p>Dress code: ${event.dress_code}</p>
+            <p>Speakers: ${event.speakers}</p>
+            <p>Contact: ${event.contact_email}</p>
+            <p>Category: ${event.category_name}</p>
+            <p>Tags: ${event.tags}</p>
+            <p>Notes: ${event.notes}</p>
+        </div>
+    </div>`
     
     /** show + if not signed up */
     eventAdapter.get(event.id).then(event => {
         if (!event.students.map(student => student.id).includes(studentId)){
             const etc = document.getElementById(`etc-${event.id}`)
-            etc.innerHTML += `<i class="fa fa-calendar-plus-o sign-up-event" data-id=${event.id} aria-hidden="true"></i>`
+            if (etc.children.length === 1) {
+                etc.innerHTML += `<i class="fa fa-calendar-plus-o sign-up-event" data-id=${event.id} aria-hidden="true"></i>`
+            }
         } 
     })
-
 }
 
 
