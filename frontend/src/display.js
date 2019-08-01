@@ -42,8 +42,6 @@ function showEvent(event, studentId){
 
 /** displaying organisation's events */
 function allOrgEvents(orgId) {
-    mainContainer.innerHTML += `
-    <h1>All My Events</h1><div id="event-list"></div>`
     orgAdapter.get(orgId)
     .then(org => {
         org.events.forEach(event => {
@@ -88,9 +86,12 @@ function displayEvent(event){
             </div>
         </div>`
 
+
+        
         fetch(`${EVENTS_URL}/1/students`)
         .then(res => res.json())
         .then(students => {
+            /** major chart */
             let canvas = document.getElementById(`major-chart-${event.id}`)
             let freq = {}
             students.forEach(student => {
@@ -119,43 +120,44 @@ function displayEvent(event){
                 }
             })
 
+        /** year chart */
+        fetch(`${EVENTS_URL}/${event.id}/students`)
+        .then(res => res.json())
+        .then(students => {
             let yearCanvas = document.getElementById(`year-chart-${event.id}`)
-            fetch(`${EVENTS_URL}/${event.id}/students`)
-            .then(res => res.json())
-            .then(students => {
-                let freq = {}
-                students.forEach(student => {
-                    if (freq[student.year] === undefined) {
-                        freq[student.year] = 1
-                    } else {
-                        freq[student.year] += 1
-                    }
-                })
-    
-                let ctx = yearCanvas.getContext('2d')
-                new Chart(ctx, {
-                    type: "pie",
-                    data: {
-                        datasets: [{
-                            data: Object.values(freq)
-                        }],
-                        labels: Object.keys(freq)
-                    },
-                    options: {
-                        plugins: {
-                            colorschemes: {
-                                scheme: 'tableau.ClassicMedium10'
-                            }
+            let freq = {}
+            students.forEach(student => {
+                if (freq[student.year] === undefined) {
+                    freq[student.year] = 1
+                } else {
+                    freq[student.year] += 1
+                }
+            })
+
+            let ctx = yearCanvas.getContext('2d')
+            new Chart(ctx, {
+                type: "pie",
+                data: {
+                    datasets: [{
+                        data: Object.values(freq)
+                    }],
+                    labels: Object.keys(freq)
+                },
+                options: {
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.ClassicMedium10'
                         }
                     }
-                })
+                }
             })
+        })
 
             /***** chart modal *****/
             let modal = document.getElementById(`chart-modal-${event.id}`);
             let btn = document.getElementById(`chart-${event.id}`);
             let span = document.getElementById(`close-${event.id}`);
-            console.log(span)
+            // console.log(span)
 
             /** open modal */
             btn.onclick = function() {
@@ -168,7 +170,7 @@ function displayEvent(event){
             }
 
             /** close modal by clicking window */
-            window.onclick = function(event) {
+            modal.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
@@ -182,6 +184,28 @@ function displayEvent(event){
 }
 
 
+function profileModal() {
+    let modal = document.getElementById("profile-modal");
+    let btn = document.getElementById("profile");
+    let span = document.getElementsByClassName("close")[0];
+
+    /** open modal */
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    /** close modal by clicking x */
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    /** close modal by clicking window */
+    modal.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
 
 /*** this is not done */
 function eventInfoContent(element, event) {

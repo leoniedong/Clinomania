@@ -1,20 +1,4 @@
 function createEvent(org) {
-    mainContainer.innerHTML += `
-    <h1>Create new event</h1>
-    <form id="create-event">
-        Title: <input type="text" name="title" required><br>
-        Location: <input id="text" name="location" required><br>
-        Start date: <input type="datetime-local" name="start" required><br>
-        End date: <input type="datetime-local" name="end" required><br>
-        Dress Code: <input type="text" name="dresscode"><br>
-        Speakers: <input type="text" name="speakers"><br>
-        Contact Email: <input type="email" name="email"><br>
-        Category:
-        <select name="category" id="select-category">
-        </select><br>
-        Tags: <input type="text" name="tags"><br>
-        <input type="submit" value="Create new event" data-id=${org.id}>
-    </form>`
 
     const selectCategoryList = document.getElementById('select-category')
     categoryAdapter.getAll().then(categories => {

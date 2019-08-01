@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
 
   def login
     student = Student.find_by(email:params[:email])
-    byebug
+    # byebug
     if student && student.authenticate(params[:password])
       render json: student, :include => {:tickets => {:include => :event}}, except: [:created_at, :updated_at]
     else

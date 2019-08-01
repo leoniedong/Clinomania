@@ -8,8 +8,6 @@ function displayStudentHomePage(student){
     <div class="nav student">
         <h2>Home page?</h2>
 
-        
-        
         <div class="user-menu" id="user-menu">
             <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
             <div id="user-option" class="user-option">
@@ -42,6 +40,7 @@ function displayStudentHomePage(student){
                                 Major:
                                 <input type="text" name="major" value="${student.major}"><br>
                                 <input type="submit" value="done" data-id=${student.id}>
+                            </div>
                             </form>
                         </div>
 
@@ -94,8 +93,8 @@ function displayStudentHomePage(student){
     </div>
     `
 
-    
     /***** profile modal *****/
+    // profileModal()
     let modal = document.getElementById("profile-modal");
     let btn = document.getElementById("profile");
     let span = document.getElementsByClassName("close")[0];
@@ -111,21 +110,20 @@ function displayStudentHomePage(student){
     }
 
     /** close modal by clicking window */
-    window.onclick = function(event) {
+    modal.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
     
-    
-    /*** navbar scrolling function that uses weird syntax and doesn't seem to work */
-    window.scroll(function() {
-        if ($(window).scrollTop() > 10) {
-            $('#navBar').addClass('floatingNav');
-        } else {
-            $('#navBar').removeClass('floatingNav');
-        }
-    });
+    /*** navbar scrolling function that doesn't seem to work */
+    // window.scroll(function() {
+    //     if ($(window).scrollTop() > 10) {
+    //         $('#navBar').addClass('floatingNav');
+    //     } else {
+    //         $('#navBar').removeClass('floatingNav');
+    //     }
+    // });
 
 
     /***** filter and search bar *****/
@@ -152,7 +150,6 @@ function displayStudentHomePage(student){
                 showEvent(event, student.id)
             })
         })
-
     })
 
 

@@ -2,6 +2,7 @@ function displayOrgHomePage(org){
 
     let editOrg = false
     displayOrgMainContent(org)
+    
 
     /** edit org profile */
     document.addEventListener('click', function(e){
@@ -53,22 +54,93 @@ function displayOrgHomePage(org){
 function displayOrgMainContent(org) {
     const mainContainer = document.querySelector('main')
     mainContainer.innerHTML = `
-    <h2>You are logged in as: ${capitalise(org.name)} (organisation)</h2>
+    <div class="nav org">
+        <h2>Home page?</h2>
+
+        <div class="user-menu" id="user-menu">
+            <h2>${capitalise(org.name)} (organisation)</h2>
+            <div id="user-option" class="user-option">
+                <h2><i class="fa fa-user-circle-o" id="view-profile" aria-hidden="true"></i></h2>
+                <div id="profile-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Welcome, ${capitalise(org.name)}</h2>
+                        <p>EMAIL: ${org.email}</p>
+                        <p>DESCRIPTION: ${org.description}</p>
+                        <button id="edit-org-button" data-id=${org.id}>Edit profile</button>
+                        <button id="del-org">Delete account</button>
+
+                        <div id="edit-org-container" style="display:none">
+                            <form id="edit-student-form">
+                                <div class="block">
+                                    Name: <input type="text" name="name" value="${org.name}"><br>
+                                    Email: <input type="email" name="email" value="${org.email}"><br>
+                                    Description: <input type="text" name="description" value="${org.description}">
+                                    <input type="submit" value="done" data-id=${org.id}>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+                <h2 id="logout"><i class="fa fa-sign-out" id="logout" aria-hidden="true"></i></h2>
+            </div>
+        </div>
+        
+    </div>
     
-    <button id="logout">Logout</button>
+    <div class="main">
+        <h1>All My Events</h1>
+        <div id="event-list"></div>
 
-    <button id="del-org" data-id=${org.id}>Delete account</button>
-
-    <button id="edit-org-btn">Edit profile</button>
-    <div class="container" style="display:none">
-        <form id="edit-org-form">
-            Name: 
-            <input type="text" name="name" value="${org.name}"><br>
-            Email: 
-            <input type="email" name="email" value="${org.email}"><br>
-            Description: 
-            <input type="text" name="description" value="${org.description}">
-            <input type="submit" value="done" data-id=${org.id}>
+        <h1>Create new event</h1>
+        <form id="create-event">
+            Title: <input type="text" name="title" required><br>
+            Location: <input id="text" name="location" required><br>
+            Start date: <input type="datetime-local" name="start" required><br>
+            End date: <input type="datetime-local" name="end" required><br>
+            Dress Code: <input type="text" name="dresscode"><br>
+            Speakers: <input type="text" name="speakers"><br>
+            Contact Email: <input type="email" name="email"><br>
+            Category:
+            <select name="category" id="select-category">
+            </select><br>
+            Tags: <input type="text" name="tags"><br>
+            <input type="submit" value="Create new event" data-id=${org.id}>
         </form>
-    </div>`
+
+
+    </div>
+    
+    `
+    
+    let modal = document.getElementById("profile-modal");
+    let btn = document.getElementById("org-profile");
+    let span = document.getElementsByClassName("close")[0];
+
+    /** open modal */
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'view-profile') {
+            console.log(modal.style.display)
+            modal.style.display = "block";
+        }        
+    })
+
+    // btn.onclick = function() {
+    //     debugger
+    //     modal.style.display = "block";
+    // }
+
+    /** close modal by clicking x */
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    /** close modal by clicking window */
+    modal.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 }
