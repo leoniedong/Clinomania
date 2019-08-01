@@ -47,7 +47,6 @@ function allOrgEvents(orgId) {
     orgAdapter.get(orgId)
     .then(org => {
         org.events.forEach(event => {
-            // console.log(event)
             displayEvent(event)
         })
     })
@@ -62,6 +61,7 @@ function displayEvent(event){
                 <h3 class="inline">${event.title}</h3>
                 <i class="fa fa-pencil-square-o edit-event" aria-hidden="true" data-id=${event.id}></i>
                 <i class="fa fa-trash del-event" aria-hidden="true" data-id=${event.id}></i>
+                <i class="fa fa-pie-chart" aria-hidden="true" id="chart-${event.id}"></i>
             </div>
 
             <div class="event-info">
@@ -76,9 +76,15 @@ function displayEvent(event){
                 <p>Notes: ${event.notes}</p>
             </div>
 
-            <div id="chart-modal" class="modal">
-                <canvas id="major-chart-${event.id}" style="width:100; height: 100"></canvas>
-                <canvas id="year-chart-${event.id}" style="width:100; height: 100"></canvas>
+            <div id="chart-modal-${event.id}" class="modal">
+                <div class="modal-content">
+                    <span id="close-${event.id}" class="close">&times;</span>
+                    <h2>Attendees for ${event.title}</h2>
+                    <h3>Major distribution</h3>
+                    <canvas id="major-chart-${event.id}" style="width:100; height: 100"></canvas>
+                    <h3>Year distribution</h3>
+                    <canvas id="year-chart-${event.id}" style="width:100; height: 100"></canvas>
+                </div>
             </div>
         </div>`
 
@@ -127,7 +133,7 @@ function displayEvent(event){
                 })
     
                 let ctx = yearCanvas.getContext('2d')
-                let myChart = new Chart(ctx, {
+                new Chart(ctx, {
                     type: "pie",
                     data: {
                         datasets: [{
@@ -145,8 +151,32 @@ function displayEvent(event){
                 })
             })
 
+            /***** chart modal *****/
+            let modal = document.getElementById(`chart-modal-${event.id}`);
+            let btn = document.getElementById(`chart-${event.id}`);
+            let span = document.getElementById(`close-${event.id}`);
+            console.log(span)
+
+            /** open modal */
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            /** close modal by clicking x */
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            /** close modal by clicking window */
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
         })
 
+        
 
 
 }

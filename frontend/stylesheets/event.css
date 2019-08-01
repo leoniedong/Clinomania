@@ -30,3 +30,7 @@
 .event-title-container h3 {
     display: inline-block;
 }
+
+.event-info {
+    vertical-align: middle;
+}
