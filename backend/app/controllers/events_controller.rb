@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
-    render json: event, include: [:organisation, :students, :category], except: [:created_at, :updated_at]
+    render json: event, include: [:organisation, :students, :category], except: [:created_at, :updated_at], methods: :category_name
   end
 
   def create
@@ -35,6 +35,11 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     event.destroy
     render json: { msg: "Successfully destroyed" }, status: :ok
+  end
+
+  def students
+    event = Event.find(params[:id])
+    render json: event.students
   end
 
   private

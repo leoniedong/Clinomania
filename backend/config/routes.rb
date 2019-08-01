@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
   post "/students/login", to: "students#login"
   post "/orgs/login", to: "organisations#login"
+  get "/events/:id/students", to: "events#students"
 
 end

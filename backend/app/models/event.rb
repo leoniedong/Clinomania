@@ -9,4 +9,6 @@ class Event < ApplicationRecord
   def category_name
     self.category.name
   end
+
+
 end

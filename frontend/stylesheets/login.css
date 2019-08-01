@@ -47,7 +47,7 @@ a {
     text-align: center;
 }
 
-.form-container input[type=text], .form-container input[type=email], .form-container select {
+.form-container input[type=text], .form-container input[type=email], .form-container input[type=password], .form-container select {
     background:whitesmoke;
     border: none;
     padding: 10px 15px;

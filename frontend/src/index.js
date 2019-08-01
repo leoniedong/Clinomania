@@ -82,6 +82,8 @@ function displayLogin() {
                     <form id="student-login">
                         <h3>Student login</h3>
                         Email: <input type="email" name="email" placeholder:"Email address">
+                        Password: <input type="password" name="password">
+
                         <input type="submit" class="button">
                     </form>
                 </div>
@@ -143,6 +145,7 @@ function displayLogin() {
             <form id="student-login">
                 <h3>Student login</h3>
                 Email: <input type="email" name="email" placeholder:"Email address">
+                Password: <input type="password" name="password" style="-webkit-text-security: disc;"><br>
                 <input type="submit" class="button">
             </form>`
             studentLogin()
@@ -153,6 +156,7 @@ function displayLogin() {
             <form id="org-login">
                 <h3>Organisation login</h3>
                 Email: <input type="email" name="email" placeholder:"Email address">
+                Password: <input type="password" name="password" style="-webkit-text-security: disc;"><br>
                 <input type="submit" class="button">
             </form>`
             orgLogin()
@@ -178,6 +182,8 @@ function displayLogin() {
                     <option value="4">4</option>
                 </select><br>
                 <input type="text" name="major" placeholder="Major"><br>
+                <input type="text" name="password" placeholder="Password" style="-webkit-text-security: disc;"><br>
+                <input type="text" name="password-confirmation" placeholder="Confirm Password" style="-webkit-text-security: circle;" ><br>
                 <input type="submit" value="create student account" class="button">
             </form>`
             studentSignup()
@@ -190,6 +196,8 @@ function displayLogin() {
                 <input type="text" name="name" placeholder="Name (required)" required><br>
                 <input type="email" name="email" placeholder="Email (required)" required><br>
                 <input type="text" name="description" placeholder="Description"><br>
+                <input type="text" name="password" placeholder="Password" style="-webkit-text-security: disc;"><br>
+                <input type="text" name="password-confirmation" placeholder="Confirm Password" style="-webkit-text-security: circle;"><br>
                 <input type="submit" class="button" value="create organisation account">
             </form>`
             orgSignup()

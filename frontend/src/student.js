@@ -7,14 +7,11 @@ function displayStudentHomePage(student){
     mainContainer.innerHTML = `
     <div class="nav student">
         <h2>Home page?</h2>
-        <form id="search-bar">
-            <input type="text" placeholder="Search..." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+
         
         
         <div class="user-menu" id="user-menu">
-            <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student) <i class="fa fa-caret-right" aria-hidden="true"></i></h2>
+            <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
             <div id="user-option" class="user-option">
                 <h2 id="profile"><i class="fa fa-user-circle-o" id="view-profile" aria-hidden="true"></i></h2>
                 <div id="profile-modal" class="modal">
@@ -62,6 +59,12 @@ function displayStudentHomePage(student){
     
         <div class="first-column">
             <h1>Browse all events</h1>
+
+            <form id="search-bar">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+
             <button id="filter">Filter</button>
             <div id="filter-container" style="display:none">
                 <form id="filter-bar">
@@ -116,13 +119,13 @@ function displayStudentHomePage(student){
     
     
     /*** navbar scrolling function that uses weird syntax and doesn't seem to work */
-    // window.scroll(function() {
-    //     if ($(window).scrollTop() > 10) {
-    //         $('#navBar').addClass('floatingNav');
-    //     } else {
-    //         $('#navBar').removeClass('floatingNav');
-    //     }
-    // });
+    window.scroll(function() {
+        if ($(window).scrollTop() > 10) {
+            $('#navBar').addClass('floatingNav');
+        } else {
+            $('#navBar').removeClass('floatingNav');
+        }
+    });
 
 
     /***** filter and search bar *****/
@@ -151,12 +154,6 @@ function displayStudentHomePage(student){
         })
 
     })
-
-
-
-
-
-
 
 
     /** calendar */

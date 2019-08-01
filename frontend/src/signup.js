@@ -7,7 +7,9 @@ function studentSignup(){
             "last_name": e.target.lastname.value,
             "email": e.target.email.value, 
             "year": e.target.year.value, 
-            "major": e.target.major.value
+            "major": e.target.major.value,
+            "password": e.target.password.value,
+            "password_confirmation": e.target.password-confirmation.value
         }
         studentAdapter.post(body)
         .then(student => {
@@ -24,10 +26,13 @@ function orgSignup(){
     const signupOrg = document.getElementById('signup-org')
     signupOrg.addEventListener('submit', function(e){
         e.preventDefault()
+        console.log(e)
         const body = {
             "name": e.target.name.value, 
             "email": e.target.email.value, 
-            "description": e.target.description.value
+            "description": e.target.description.value,
+            "password": e.target[3].value,
+            "password_confirmation": e.target[4].value
         }
         orgAdapter.post(body)
         .then(org => {

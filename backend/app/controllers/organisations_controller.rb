@@ -5,7 +5,7 @@ class OrganisationsController < ApplicationController
 
   def login
     org = Organisation.find_by(email:params[:email])
-    byebug
+    # byebug
     if org && org.authenticate(params[:password])
       render json: org
     else
@@ -16,17 +16,17 @@ class OrganisationsController < ApplicationController
 
   def index
     organisations = Organisation.all
-    render json: organisations, include: [:events], except: [:created_at, :updated_at]
+    render json: organisations, include: [:events => {methods: :category_name}], except: [:created_at, :updated_at]
   end
 
   def show
     organisation = Organisation.find(params[:id])
-    render json: organisation, include: [:events], except: [:created_at, :updated_at]
+    render json: organisation, include: [:events => {methods: :category_name}], except: [:created_at, :updated_at]
   end
 
   def create
     organisation = Organisation.new(organisation_params)
-    byebug
+    # byebug
     if organisation.save
       render json: organisation, include: [:events], except: [:created_at, :updated_at]
     else

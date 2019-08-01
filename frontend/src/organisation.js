@@ -1,7 +1,6 @@
 function displayOrgHomePage(org){
 
     let editOrg = false
-
     displayOrgMainContent(org)
 
     /** edit org profile */
@@ -48,7 +47,6 @@ function displayOrgHomePage(org){
     allOrgEvents(orgId)
     createEvent(org)
     editOrDeleteEvent()
-    
     
 }
 

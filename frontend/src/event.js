@@ -1,15 +1,3 @@
-function allOrgEvents(orgId) {
-    mainContainer.innerHTML += `
-    <h1>Events</h1><div id="event-list"></div>`
-
-    orgAdapter.get(orgId)
-    .then(org => {
-        org.events.forEach(event => {
-            displayEvent(event)
-        })
-    })
-}
-
 function createEvent(org) {
     mainContainer.innerHTML += `
     <h1>Create new event</h1>

@@ -2,9 +2,13 @@ function studentLogin(){
     const studentLogin = document.getElementById('student-login')
     studentLogin.addEventListener('submit', function(e){
         e.preventDefault()
+        console.log(e)
         const email = e.target[0].value
-        
-        let body = { email }
+        const password = e.target[1].value
+        let body = { 
+            email: email, 
+            password: password 
+        }
         baseAdapter.studentLogin(body)
         .then(data => {
             if (data.error) {
@@ -27,8 +31,13 @@ function orgLogin(){
     const orgLogin = document.getElementById('org-login')
     orgLogin.addEventListener('submit', function(e){
         e.preventDefault()
+        console.log(e)
         const email = e.target[0].value
-        let body = { email }
+        const password = e.target[1].value
+        let body = { 
+            email: email, 
+            password: password 
+        }
         baseAdapter.orgLogin(body)
         .then(data => {
             if (data.error) {
