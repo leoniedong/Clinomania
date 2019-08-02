@@ -10,8 +10,8 @@ function displayTicket(ticket) {
     const myTickets = document.getElementById('my-tickets')
     myTickets.innerHTML += `
         <div class="my-event">
-            <h3>${ticket.event.title}</h3>
-            <button class="del-ticket" data-id=${ticket.id}>Cancel event</button>
+            <h3 style="display: inline-block;">${ticket.event.title}</h3>
+            <button class="del-ticket icon-btn" data-id=${ticket.id}><i class="fa fa-trash" aria-hidden="true"></i></button>
             <p>${ticket.event.location} | ${displayDate(ticket.event.start)}</p>
         </div>`
 }

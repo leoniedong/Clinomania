@@ -6,9 +6,7 @@ function displayOrgHomePage(org){
 
     /** edit org profile */
     document.addEventListener('click', function(e){
-        console.log(e)
         if (e.target.id === 'edit-org-btn') {
-            // debugger
             let orgForm = document.getElementById('edit-org-container')
             editOrg = !editOrg
             if (editOrg) {
@@ -57,7 +55,7 @@ function displayOrgMainContent(org) {
     const mainContainer = document.querySelector('main')
     mainContainer.innerHTML = `
     <div class="nav org">
-        <h2>Home page?</h2>
+        <h2>Clinomania</h2>
 
         <div class="user-menu" id="user-menu">
             <h2>${capitalise(org.name)} (organisation)</h2>
@@ -69,8 +67,8 @@ function displayOrgMainContent(org) {
                         <h2>Welcome, ${capitalise(org.name)}</h2>
                         <p>EMAIL: ${org.email}</p>
                         <p>DESCRIPTION: ${org.description}</p>
-                        <button id="edit-org-btn" data-id=${org.id}>Edit profile</button>
-                        <button id="del-org">Delete account</button>
+                        <button id="edit-org-btn" class="btn" data-id=${org.id}>Edit profile <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                        <button id="del-org" class="btn">Delete account <i class="fa fa-trash" aria-hidden="true"></i></button>
 
                         <div id="edit-org-container" style="display:none">
                             <form id="edit-org-form">
@@ -98,18 +96,20 @@ function displayOrgMainContent(org) {
 
         <h1>Create new event</h1>
         <form id="create-event">
-            Title: <input type="text" name="title" required><br>
-            Location: <input id="text" name="location" required><br>
-            Start date: <input type="datetime-local" name="start" required><br>
-            End date: <input type="datetime-local" name="end" required><br>
-            Dress Code: <input type="text" name="dresscode"><br>
-            Speakers: <input type="text" name="speakers"><br>
-            Contact Email: <input type="email" name="email"><br>
-            Category:
-            <select name="category" id="select-category">
-            </select><br>
-            Tags: <input type="text" name="tags"><br>
-            <input type="submit" value="Create new event" data-id=${org.id}>
+            <div class="block">
+                Title: <input type="text" name="title" required><br>
+                Location: <input type="text" name="location" required><br>
+                Start date: <input type="datetime-local" name="start" required><br>
+                End date: <input type="datetime-local" name="end" required><br>
+                Dress Code: <input type="text" name="dresscode"><br>
+                Speakers: <input type="text" name="speakers"><br>
+                Contact Email: <input type="email" name="email"><br>
+                Category:
+                <select name="category" id="select-category">
+                </select><br>
+                Tags: <input type="text" name="tags"><br>
+                <input type="submit" value="Create new event" data-id=${org.id} class="btn">
+            </div>
         </form>
 
     </div>`

@@ -8,8 +8,8 @@ function studentSignup(){
             "email": e.target.email.value, 
             "year": e.target.year.value, 
             "major": e.target.major.value,
-            "password": e.target.password.value,
-            "password_confirmation": e.target.password-confirmation.value
+            "password": e.target[5].value,
+            "password_confirmation": e.target[6].value
         }
         studentAdapter.post(body)
         .then(student => {

@@ -70,6 +70,7 @@ function capitalise(word) {
 /** login and signup forms */
 function displayLogin() {
     mainContainer.innerHTML = `
+    <div class="center">
     <div class="container" id="container">
         <div id="login" class="form-container login-container">
             <div class="pills">
@@ -111,6 +112,8 @@ function displayLogin() {
                             <option value="4">4</option>
                         </select><br>
                         <input type="text" name="major" placeholder="Major"><br>
+                        <input type="text" name="password" placeholder="Password" style="-webkit-text-security: disc;"><br>
+                        <input type="text" name="password-confirmation" placeholder="Confirm Password" style="-webkit-text-security: circle;" ><br>
                         <input type="submit" value="create student account" class="button">
                     </form>
                 </div>
@@ -131,6 +134,7 @@ function displayLogin() {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     `
     studentLogin()
@@ -174,13 +178,13 @@ function displayLogin() {
                 <input type="text" name="firstname" placeholder="First Name (required)" required><br>
                 <input type="text" name="lastname" placeholder="Last name (required)" required><br>
                 <input type="email" name="email" placeholder="Email (required)" required><br>
-                Year: 
                 <select name="year">
+                    <option value="year" disabled selected>Year</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                </select><br>
+                    </select><br>
                 <input type="text" name="major" placeholder="Major"><br>
                 <input type="text" name="password" placeholder="Password" style="-webkit-text-security: disc;"><br>
                 <input type="text" name="password-confirmation" placeholder="Confirm Password" style="-webkit-text-security: circle;" ><br>

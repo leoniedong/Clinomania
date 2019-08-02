@@ -6,7 +6,7 @@ function displayStudentHomePage(student){
     /***** navbar (search, user menu), two-column layour content */
     mainContainer.innerHTML = `
     <div class="nav student">
-        <h2>Home page?</h2>
+        <h2>Clinomania</h2>
 
         <div class="user-menu" id="user-menu">
             <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
@@ -16,17 +16,17 @@ function displayStudentHomePage(student){
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Welcome, ${capitalise(student.first_name)} ${capitalise(student.last_name)}</h2>
-                        <p>EMAIL: ${student.email}</p>
-                        <p>YEAR: ${student.year}</p>
-                        <p>MAJOR: ${student.major}</p>
-                        <button id="edit-student-button" data-id=${student.id}>Edit profile</button>
-                        <button id="del-student">Delete account</button>
+                        EMAIL: ${student.email}<br>
+                        YEAR: ${student.year}<br>
+                        MAJOR: ${student.major}<br>
+                        <button id="edit-student-button" class="btn" data-id=${student.id}>Edit profile</button>
+                        <button id="del-student" class="btn">Delete account</button>
 
 
                         <div id="edit-student-container" style="display:none">
                             <form id="edit-student-form">
                             <div class="block">
-                                First name: <input type="text" name="firstname" value="${student.first_name}"><br></div>
+                                First name: <input type="text" name="firstname" value="${student.first_name}"><br>
                                 Last name: <input type="text" name="lastname" value="${student.last_name}"><br>
                                 Email: 
                                 <input type="email" name="email" value="${student.email}"><br>
@@ -38,8 +38,8 @@ function displayStudentHomePage(student){
                                     <option value="4">4</option>
                                 </select><br>
                                 Major:
-                                <input type="text" name="major" value="${student.major}"><br>
-                                <input type="submit" value="done" data-id=${student.id}>
+                                <input type="text" name="major" value="${student.major}">
+                                <button type="submit" data-id=${student.id} style="border: 0px"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
                             </div>
                             </form>
                         </div>
@@ -59,20 +59,23 @@ function displayStudentHomePage(student){
         <div class="first-column">
             <h1>Browse all events</h1>
 
-            <button id="show-all">Show all</button>
-            <div id="search-container">
-                <form id="search-bar">
-                    <input type="text" placeholder="Search..." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+            <div class="inline">
+                <button id="show-all" class="btn" style="display: inline-block">Show all</button>
+                <div id="search-container" style="display: inline-block">
+                    <form id="search-bar" style="display: inline-flex">
+                        <input class="searchTerm" type="text" placeholder="Search..." name="search">
+                        <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+
+                <form id="filter-bar" style="display: inline-block">
+                    <select class="filter" id="filter-category" style="display: inline-block;">Category
+                        <option disabled selected>-- Filter by category --</option>
+                    </select>
+                    <button type="submit" style="display: inline-block;" class="icon-btn"><i class="fa fa-filter" aria-hidden="true"></i></button>
                 </form>
             </div>
 
-                <form id="filter-bar">
-                    <select id="filter-category">Category
-                        <option disabled selected>-- Filter by category --</option>
-                    </select>
-                    <input type="submit" value="apply">
-                </form>
             <div id="events"></div>
             
         </div>

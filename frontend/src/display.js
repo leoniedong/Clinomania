@@ -92,7 +92,7 @@ function displayEvent(event){
 
 
         
-        fetch(`${EVENTS_URL}/1/students`)
+        fetch(`${EVENTS_URL}/${event.id}/students`)
         .then(res => res.json())
         .then(students => {
             /** major chart */

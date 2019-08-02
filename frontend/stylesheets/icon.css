@@ -1,23 +1,14 @@
 i {
     /* float: right; */
     display: inline-block;
+    font-size: 15em;
 }
 
 i:hover {
     color: #47B2D3;
+    cursor: pointer;
 }
 
-.block {
-    display: inline-flex;
-}
-
-.block input[type=text], .block input[type=email], .block select {
-    background:whitesmoke;
-    border: none;
-    /* padding: 10px 15px; */
-    /* margin: 8px 0; */
-    /* width: 100%; */
-    /* -webkit-appearance: none; */
-    /* -moz-appearance: none; */
-    /* appearance: none; */
+i:active{
+    transform: scale(0.95)
 }

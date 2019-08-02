@@ -10,6 +10,68 @@ body {
     padding: 50px;
 }
 
+/** buttons **/
+.btn {
+    font-family: inherit;
+    /* background: #646E7B; */
+    /* color: white; */
+    font-size: 12px;
+    border-radius: 5px;
+    border: gray solid 0.5px;
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    /* letter-spacing: 1px; */
+}
+
+.btn:hover{
+    /* background:gray; */
+    color: #47B2D3;
+    cursor:pointer;
+}
+
+.btn:active{
+    transform: scale(0.95)
+}
+
+.btn:focus {
+    outline:none;
+}
+
+.icon-btn {
+    border: none;
+    font-size: 20px;
+}
+
+.filter {
+    font-family: inherit;
+    /* border: none;
+    border-bottom: 0.5px solid grey; */
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    padding: 10px;
+    margin: 10px;
+    height: 36px;
+    border: 0.5px solid gray;
+    background: white;
+}
+
+.filter:focus {
+    color: #47B2D3;
+}
+
+
+.center {
+    position: relative;
+    top: 20%;
+    left: 20%;
+    /* transform: translate(50%, 50%); */
+}
+
+
+
 /***** fonts *****/
 p {
     font-family: Helvetica, Arial, sans-serif;
@@ -35,4 +97,93 @@ html {
 
 selected option:disabled {
     color: gray
+}
+
+.inline {
+    display: inline-block;
+    /* display: inline; */
+}
+
+/** search bar */
+.search-bar {
+    width: 100%;
+    position: relative;
+    /* display: inline-flex; */
+}
+
+.searchTerm {
+    /* width: 100%; */
+    font-family: inherit;
+    border: 0.5px solid gray;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #47B2D3;
+    font-size: 12px;
+    padding: 10px;
+    padding-right: 0px;
+    margin: 10px;
+    margin-right: 0px;
+    
+    text-transform: uppercase;
+}
+
+.searchTerm:focus{
+    color: #47B2D3;
+}
+
+.searchButton {
+    width: 40px;
+    height: 36px;
+    border: 0.5px solid gray;
+    background: gray;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/** inputs **/
+.block {
+    /* display: inline-flex; */
+    line-height: 2.5;
+}
+
+.block input[type=text], .block input[type=email], .block select, .block input[type=datetime-local] {
+    /* background:whitesmoke; */
+    /* border: none; */
+    border: none;
+    border-bottom: 0.5px solid grey;
+    text-align: center;
+    font-size: 12px;
+    /* color: gray; */
+    /* padding: 10px 15px; */
+    /* margin: 8px 0; */
+    /* width: 100%; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+}
+
+.small-block {
+    /* display: inline-flex; */
+    line-height: 1.5;
+}
+
+.small-block input[type=text], .small-block input[type=email], .small-block select, .small-block input[type=datetime-local] {
+    /* background:whitesmoke; */
+    /* border: none; */
+    border: none;
+    border-bottom: 0.5px solid grey;
+    text-align: center;
+    font-size: 12px;
+    /* color: gray; */
+    /* padding: 10px 15px; */
+    /* margin: 8px 0; */
+    /* width: 100%; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
 }
