@@ -39,7 +39,7 @@ function displayStudentHomePage(student){
                                 </select><br>
                                 Major:
                                 <input type="text" name="major" value="${student.major}">
-                                <button type="submit" data-id=${student.id} style="border: 0px"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                                <button type="submit" data-id=${student.id} style="border: 0px" class="icon-btn"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
                             </div>
                             </form>
                         </div>
@@ -69,7 +69,7 @@ function displayStudentHomePage(student){
                 </div>
 
                 <form id="filter-bar" style="display: inline-block">
-                    <select class="filter" id="filter-category" style="display: inline-block;">Category
+                    <select class="filter" id="filter-category" style="display: inline-block; margin-right: 0px;">Category
                         <option disabled selected>-- Filter by category --</option>
                     </select>
                     <button type="submit" style="display: inline-block;" class="icon-btn"><i class="fa fa-filter" aria-hidden="true"></i></button>

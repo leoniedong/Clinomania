@@ -11,7 +11,7 @@ function displayTicket(ticket) {
     myTickets.innerHTML += `
         <div class="my-event">
             <h3 style="display: inline-block;">${ticket.event.title}</h3>
-            <button class="del-ticket icon-btn" data-id=${ticket.id}><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button class="icon-btn"><i class="fa fa-trash del-ticket" aria-hidden="true" data-id=${ticket.id}></i></button>
             <p>${ticket.event.location} | ${displayDate(ticket.event.start)}</p>
         </div>`
 }
@@ -45,7 +45,8 @@ function removeTicket(studentId, calendar) {
     const eventBlock = document.getElementById('events')
 
     myTickets.addEventListener('click', function(e){
-        if (e.target.className === 'del-ticket') {
+        console.log(e)
+        if (e.target.classList.contains('del-ticket')) {
             const ticketId = e.target.dataset.id
 
             /** deleting event from calendar */
@@ -58,7 +59,7 @@ function removeTicket(studentId, calendar) {
 
             ticketAdapter.delete(ticketId)
             .then(event => {
-                e.target.parentElement.remove()
+                e.target.parentElement.parentElement.remove()
                 eventBlock.innerHTML = ''
                 displayAllEvents(studentId)
             })
