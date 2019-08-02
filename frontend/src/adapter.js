@@ -13,14 +13,17 @@ class Adapter {
     }
 
     options(method, body) {
-        return {
+        const object = {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json'
             },
-            body: JSON.stringify(body)
         }
+        if (body !== undefined) {
+            object.body = JSON.stringify(body)
+        }
+        return object
     }
 
     post (body) {

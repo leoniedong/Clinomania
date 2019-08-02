@@ -6,7 +6,8 @@ function displayStudentHomePage(student){
     /***** navbar (search, user menu), two-column layour content */
     mainContainer.innerHTML = `
     <div class="nav student">
-        <h2>Clinomania</h2>
+        <h2>Clinomania <i class="fa fa-superpowers" aria-hidden="true"></i>
+        </h2>
 
         <div class="user-menu" id="user-menu">
             <h2>${capitalise(student.first_name)} ${capitalise(student.last_name)} (student)</h2>
@@ -20,7 +21,7 @@ function displayStudentHomePage(student){
                         YEAR: ${student.year}<br>
                         MAJOR: ${student.major}<br>
                         <button id="edit-student-button" class="btn" data-id=${student.id}>Edit profile</button>
-                        <button id="del-student" class="btn">Delete account</button>
+                        <button id="del-student" class="btn" data-id=${student.id}>Delete account</button>
 
 
                         <div id="edit-student-container" style="display:none">
@@ -226,6 +227,7 @@ function deleteStudent() {
     deleteStudentBtn.addEventListener('click', function(e){
         e.preventDefault()
         let studentId = e.target.dataset.id
+        console.log(studentId)
         studentAdapter.delete(studentId)
         .then(() => {
             displayLogin()

@@ -32,6 +32,7 @@ function displayOrgHomePage(org){
         /** delete organisation */
         else if (e.target.id === 'del-org') {
             let orgId = e.target.dataset.id
+            console.log(orgId)
             orgAdapter.delete(orgId)
             .then(() => {
                 displayLogin(),
@@ -55,7 +56,8 @@ function displayOrgMainContent(org) {
     const mainContainer = document.querySelector('main')
     mainContainer.innerHTML = `
     <div class="nav org">
-        <h2>Clinomania</h2>
+        <h2>Clinomania <i class="fa fa-superpowers" aria-hidden="true"></i>
+        </h2>
 
         <div class="user-menu" id="user-menu">
             <h2>${capitalise(org.name)} (organisation)</h2>
@@ -68,7 +70,7 @@ function displayOrgMainContent(org) {
                         <p>EMAIL: ${org.email}</p>
                         <p>DESCRIPTION: ${org.description}</p>
                         <button id="edit-org-btn" class="btn" data-id=${org.id}>Edit profile <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                        <button id="del-org" class="btn">Delete account <i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button id="del-org" class="btn" data-id=${org.id}>Delete account <i class="fa fa-trash" aria-hidden="true"></i></button>
 
                         <div id="edit-org-container" style="display:none">
                             <form id="edit-org-form">
