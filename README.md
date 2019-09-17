@@ -8,7 +8,7 @@ This is a Rails API backend, JavaScript frontend solo project.
 
 ### Student functionalities
 Create a new account
-![Creating new student account](/frontend/assets/student-create-account.gif)
+![Creating new student account](frontend/assets/student-create-account.gif)
 
 Log in
 
