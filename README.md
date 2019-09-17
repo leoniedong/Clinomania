@@ -8,7 +8,7 @@ This is a Rails API backend, JavaScript frontend solo project.
 
 ### Student functionalities
 Create a new account
-![Creating new student account](frontend/assets/student-create-account.gif)
+![Creating new student account](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-create-account.gif)
 
 Log in
 
