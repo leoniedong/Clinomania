@@ -11,7 +11,7 @@ Create a new account
 ![Creating new student account](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-create-account.gif)
 
 Log in
-![Logging in as a student](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-login.gif)
+![Logging in as a student](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/student-login.gif)
 
 Edit profile
 ![Editting student profile](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-edit-profile.gif)
