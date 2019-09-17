@@ -14,27 +14,33 @@ Log in
 ![Logging in as a student](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/student-login.gif)
 
 Edit profile
-![Editting student profile](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-edit-profile.gif)
+![Editting student profile](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/student-edit-profile.gif)
 
 Browse events
-![Browsing events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-browse-events.gif)
+![Browsing events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/student-browse-event.gif)
 
 Sign up/cancel events
-![Signing up for and cancelling events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-sign-up-or-cancel-events.gif)
+![Signing up for and cancelling events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/student-sign-up-cancel-events.gif)
 
 
 ### Organisation functionalities
 Create a new account
+![Creating new organisation account](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-create-account.gif)
 
 Log in
+![Logging in as an organisation](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-login.gif)
 
 Edit profile
+![Editting organisation profile](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-edit-profile.gif)
 
 Create a new event
+![Creating a new event](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-create-event.gif)
 
 Edit an event
+![Editting an event](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-edit-event.gif)
 
 See student demographics for an event
+![Student demographics for an event](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/org-student-demographics.gif)
 
 ## API references
 The calendar functionalities use [FullCalendar](https://github.com/fullcalendar/fullcalendar).
