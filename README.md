@@ -8,15 +8,19 @@ This is a Rails API backend, JavaScript frontend solo project.
 
 ### Student functionalities
 Create a new account
-![Creating new student account](frontend/assets/student-create-account.gif)
+![Creating new student account](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-create-account.gif)
 
 Log in
+![Logging in as a student](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-login.gif)
 
 Edit profile
+![Editting student profile](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-edit-profile.gif)
 
 Browse events
+![Browsing events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-browse-events.gif)
 
 Sign up/cancel events
+![Signing up for and cancelling events](https://github.com/leoniedong/Clinomania/blob/master/frontend/assets/Student-sign-up-or-cancel-events.gif)
 
 
 ### Organisation functionalities
