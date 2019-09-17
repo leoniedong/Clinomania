@@ -4,7 +4,7 @@
 This app integrates a calendar that tracks individual user's schedule as they sign up or cancel an event.
 This is a Rails API backend, JavaScript frontend solo project.
 
-## How to use? - Video demo
+## How to use? - GIF demos
 
 ### Student functionalities
 Create a new account
