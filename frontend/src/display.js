@@ -28,7 +28,6 @@ function showEvent(event, studentId){
             <p>Contact: ${event.contact_email}</p>
             <p>Category: ${event.category_name}</p>
             <p>Tags: ${event.tags}</p>
-            <p>Notes: ${event.notes}</p>
         </div>
     </div>`
     
@@ -75,7 +74,6 @@ function displayEvent(event){
                 <p>Contact: ${event.contact_email}</p>
                 <p>Category: ${event.category_name}</p>
                 <p>Tags: ${event.tags}</p>
-                <p>Notes: ${event.notes}</p>
             </div>
 
             <div id="chart-modal-${event.id}" class="modal">
