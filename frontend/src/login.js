@@ -31,7 +31,7 @@ function orgLogin(){
     const orgLogin = document.getElementById('org-login')
     orgLogin.addEventListener('submit', function(e){
         e.preventDefault()
-        console.log(e)
+        // console.log(e)
         const email = e.target[0].value
         const password = e.target[1].value
         let body = { 
